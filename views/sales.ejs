@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sell Medicines</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .qty-input {
+      width: 80px;
+    }
+    .subtotal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <div class="container mt-5">
+    <h2 class="mb-4">Confirm Sale</h2>
+
+    <!-- Search bar to add more items -->
+    <div class="mb-4">
+      <label class="form-label">Add More Items</label>
+      <input type="text" id="searchBox" class="form-control" placeholder="Search by name or category" autocomplete="off">
+      <div id="searchResults" class="list-group mt-1"></div>
+    </div>
+
+    <!-- Sale form -->
+    <form action="/sale/confirm" method="POST" id="saleForm">
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Available</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% medicines.forEach((med, index) => { %>
+            <tr>
+              <td><%= med.name %></td>
+              <td><%= med.category %></td>
+              <td><%= med.stock %></td>
+              <td>$<%= med.price %></td>
+              <td>
+                <input type="hidden" name="items[<%= index %>][id]" value="<%= med._id %>">
+                <input type="hidden" name="items[<%= index %>][name]" value="<%= med.name %>">
+                <input type="hidden" name="items[<%= index %>][price]" value="<%= med.price %>">
+                <input type="number" name="items[<%= index %>][quantity]" class="form-control qty-input" min="0" max="<%= med.stock %>" value="0" onchange="calculateTotal()">
+              </td>
+              <td class="subtotal">$0.00 
+                <button type="button" class="btn-close ms-2" onclick="removeRow(this)"></button>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4>Total: <span id="totalPrice">$0.00</span></h4>
+        <button type="submit" class="btn btn-success btn-lg">Confirm Sale</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const searchBox = document.getElementById('searchBox');
+    const resultsContainer = document.getElementById('searchResults');
+    const medicineTable = document.querySelector('tbody');
+    const selectedIds = new Set();
+
+    // Preload existing IDs
+    document.querySelectorAll('input[name$="[id]"]').forEach(input => {
+      selectedIds.add(input.value);
+    });
+
+    searchBox.addEventListener('input', async () => {
+      const query = searchBox.value.trim();
+      if (query.length < 2) return resultsContainer.innerHTML = '';
+
+      const res = await fetch(`/api/medicines/search?query=${query}`);
+      const medicines = await res.json();
+
+      resultsContainer.innerHTML = '';
+      medicines.forEach(med => {
+        if (selectedIds.has(med._id)) return;
+
+        const item = document.createElement('button');
+        item.className = 'list-group-item list-group-item-action';
+        item.textContent = `${med.name} - ${med.category}`;
+        item.onclick = () => addMedicineToTable(med);
+        resultsContainer.appendChild(item);
+      });
+    });
+
+    function addMedicineToTable(med) {
+      selectedIds.add(med._id);
+      resultsContainer.innerHTML = '';
+      searchBox.value = '';
+
+      const index = medicineTable.rows.length;
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${med.name}</td>
+        <td>${med.category}</td>
+        <td>${med.stock}</td>
+        <td>$${med.price}</td>
+        <td>
+          <input type="hidden" name="items[${index}][id]" value="${med._id}">
+          <input type="hidden" name="items[${index}][name]" value="${med.name}">
+          <input type="hidden" name="items[${index}][price]" value="${med.price}">
+          <input type="number" name="items[${index}][quantity]" class="form-control qty-input" min="0" max="${med.stock}" value="0" onchange="calculateTotal()">
+        </td>
+        <td class="subtotal">$0.00 
+          <button type="button" class="btn-close ms-2" onclick="removeRow(this)"></button>
+        </td>
+      `;
+      medicineTable.appendChild(row);
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      const rows = document.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        const price = parseFloat(row.querySelector('input[name$="[price]"]').value);
+        const qtyInput = row.querySelector('input[name$="[quantity]"]');
+        const quantity = parseInt(qtyInput.value) || 0;
+        const subtotal = price * quantity;
+        row.querySelector('.subtotal').childNodes[0].textContent = `$${subtotal.toFixed(2)} `;
+        total += subtotal;
+      });
+      document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
+    }
+
+    function removeRow(button) {
+      const row = button.closest('tr');
+      const idInput = row.querySelector('input[name$="[id]"]');
+      if (idInput) {
+        selectedIds.delete(idInput.value);
+      }
+      row.remove();
+      calculateTotal();
+    }
+
+    document.getElementById('saleForm').addEventListener('submit', function (e) {
+      const hasValidQty = Array.from(document.querySelectorAll('input[name$="[quantity]"]'))
+        .some(input => parseInt(input.value) > 0);
+      if (!hasValidQty) {
+        e.preventDefault();
+        alert("Please select at least one medicine with quantity > 0");
+      }
+    });
+  </script>
+
+</body>
+</html>

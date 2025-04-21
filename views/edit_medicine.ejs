@@ -1,0 +1,48 @@
+<!-- edit-medicine.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Medicine</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-header bg-warning text-dark">
+        <h4 class="mb-0">Edit Medicine</h4>
+      </div>
+      <div class="card-body">
+
+        <form>
+          <!-- Same structure as add form -->
+          <!-- Example pre-filled values -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Medicine Name</label>
+              <input type="text" class="form-control" value="Paracetamol" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Category</label>
+              <select class="form-select">
+                <option selected>Tablet</option>
+                <option>Syrup</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ... Other inputs with values pre-filled similarly -->
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
