@@ -25,7 +25,7 @@
   <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h3>Medicine Dashboard</h3>
-      <a href="add-medicine.html" class="btn btn-success">+ Add Medicine</a>
+      <a href="/add-product" class="btn btn-success">+ Add Medicine</a>
     </div>
 
     <!-- Search & Filter -->
@@ -62,7 +62,7 @@
                 <input type="checkbox" class="select-medicine" value="<%=element._id%>">
               </td>
               <td>
-                <%= element.name %>
+                <%= element.brand %>
               </td>
               <td>
                 <%= element.category %>
@@ -71,8 +71,9 @@
                 <%= element.stock %>
               </td>
               <td>
-                <%= element.expiry %>
+                <%= new Date(element.expiryDate).toLocaleDateString() %>
               </td>
+              
               <td>
                 <%= element.price %>
               </td>

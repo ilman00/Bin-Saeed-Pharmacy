@@ -1,40 +1,58 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    category: {
-        type: String,
-        enum: ['Medicine', 'Cosmetic'],
-        required: true,
-    },
-    brand: {
-        type: String,
-        default: 'Generic',
-    },
-    description: {
-        type: String,
-    },
-    stock: {
-        type: Number,
-        required: true,
-        min: 0,
-    },
-    price: {
-        type: Number,
-        required: true,
-        min: 0,
-    },
-    expiry: {
-        type: Date,
-        // Only required if it's a medicine
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    }
+const productShema = new mongoose.Schema({
+  brand: {
+    type: String,
+    required: true
+  },
+  formula: {
+    type: String,
+  },
+  category: {
+    type: String,
+    enum: [
+      'Antibiotic',
+      'Antacid',
+      'Painkiller',
+      'NSAID',
+      'Antihistamine',
+      'Antiallergic',
+      'Antidiabetic',
+      'Cholesterol',
+      'Antihypertensive',
+      'Blood Thinner',
+      'Fever',
+      'Analgesic'
+    ],
+    required: true
+  },
+  batchNumber: {
+    type: String,
+    required: true
+  },
+  manufacturer: {
+    type: String,
+  },
+  expiryDate: {
+    type: Date,
+  },
+  stock: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  unit: {
+    type: String,
+    enum: ['per strip', 'per tablet', 'per pack', 'per unit'],
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  }
+}, {
+  timestamps: true
 });
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Product', productShema);

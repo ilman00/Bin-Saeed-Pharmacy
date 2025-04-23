@@ -14,20 +14,20 @@
       </div>
       <div class="card-body">
 
-        <form>
+        <form action="/add-product" method="post">
           <div class="row mb-3">
             <div class="col-md-6">
               <label class="form-label">Medicine Name</label>
-              <input type="text" class="form-control" placeholder="e.g. Paracetamol" required>
+              <input type="text" name="name" class="form-control" placeholder="e.g. Paracetamol" required>
             </div>
             <div class="col-md-6">
               <label class="form-label">Category</label>
-              <select class="form-select">
+              <select class="form-select" name="category">
                 <option selected disabled>Select Category</option>
-                <option>Tablet</option>
-                <option>Syrup</option>
-                <option>Injection</option>
-                <option>Ointment</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Syrup">Syrup</option>
+                <option value="Injection">Injection</option>
+                <option value="Ointment">Ointment</option>
               </select>
             </div>
           </div>
@@ -35,36 +35,46 @@
           <div class="row mb-3">
             <div class="col-md-4">
               <label class="form-label">Batch Number</label>
-              <input type="text" class="form-control" placeholder="e.g. B1234" required>
+              <input type="text" name="Batch" class="form-control" placeholder="e.g. B1234" required>
             </div>
             <div class="col-md-4">
               <label class="form-label">Manufacturer</label>
-              <input type="text" class="form-control" placeholder="e.g. XYZ Pharma" required>
+              <input type="text" class="form-control" name="manufacturer" placeholder="e.g. XYZ Pharma" required>
             </div>
             <div class="col-md-4">
               <label class="form-label">Expiry Date</label>
-              <input type="date" class="form-control" required>
+              <input type="date" name="expiry" class="form-control" required>
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col-md-4">
               <label class="form-label">Stock Quantity</label>
-              <input type="number" class="form-control" min="0" required>
+              <input type="number" name="stock" class="form-control" min="0" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Select Unite</label>
+              <select class="form-select" name="category">
+                <option selected disabled>Select Unite</option>
+                <option value="Tablet">Per Tablet</option>
+                <option value="Syrup">Per Strip</option>
+                <option value="Injection">Per Pack</option>
+                <option value="Ointment">Per Unit</option>
+              </select>
             </div>
             <div class="col-md-4">
               <label class="form-label">Price (per unit)</label>
-              <input type="number" class="form-control" step="0.01" required>
+              <input type="number" name="price" class="form-control" step="0.01" required>
             </div>
             <div class="col-md-4">
               <label class="form-label">Dosage Form</label>
-              <input type="text" class="form-control" placeholder="e.g. 500mg, 5ml" required>
+              <input type="text" name="dosage" class="form-control" placeholder="e.g. 500mg, 5ml" required>
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Description (optional)</label>
-            <textarea class="form-control" rows="3" placeholder="Any additional info..."></textarea>
+            <textarea class="form-control" name="discription" rows="3" placeholder="Any additional info..."></textarea>
           </div>
 
           <div class="d-flex justify-content-end">
