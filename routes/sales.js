@@ -4,20 +4,27 @@ const SoldItem = require('../models/SoldItems');
 const SaleTransaction = require('../models/SaleTransaction');
 const route = express.Router()
 
-route.get('/sale-page', (req, res)=>{
-    res.render('sale')
+route.get('/sale-page', (req, res) => {
+  res.render('sale')
 })
 
-route.get('/api/sale', async (req, res)=>{
-  try{
+route.get('/api/sale', async (req, res) => {
+  try {
     const query = req.query.query;
-    const data = await ProductModel.find({brand: {$regex: query, $options: 'i'}})
+    const data = await ProductModel.find({ brand: { $regex: query, $options: 'i' } })
     console.log("log from sale : ", data[0]);
     res.status(200).json(data)
-  }catch(err){
-    res.status(500).json({error: err.message})
+  } catch (err) {
+    res.status(500).json({ error: err.message })
   }
+
+  // TODO: Discount is not adding on the frontend
 })
+
+
+
+
+
 
 
 
@@ -29,10 +36,26 @@ route.post('/api/sale/update', async (req, res) => {
 
     const soldItemIds = [];
     let totalAmount = 0;
+    let totalProfit = 0;
 
     for (const item of items) {
       const med = await ProductModel.findOne({ brand: item.brand });
       if (!med) continue;
+
+      // Calculate discount
+      let discountAmount = 0;
+      if (typeof item.discount === 'string' && item.discount.includes('%')) {
+        const discountPercent = parseFloat(item.discount) || 0;
+        discountAmount = (item.price * discountPercent) / 100;
+      } else {
+        discountAmount = parseFloat(item.discount) || 0;
+      }
+
+      const discountedPrice = Math.round(item.price - discountAmount);
+      const totalSellingPrice = discountedPrice * item.quantity;
+      const totalCost = med.purchasePrice * item.quantity;
+      const profit = totalSellingPrice - totalCost;
+      totalProfit += profit;
 
       if (med.stock >= item.quantity) {
         med.stock -= item.quantity;
@@ -44,31 +67,48 @@ route.post('/api/sale/update', async (req, res) => {
           quantity: item.quantity,
           price: item.price,
           discount: item.discount,
-          total: item.total,
+          total: totalSellingPrice,
+          purchasePrice: med.purchasePrice,
+          profit: profit,
           date: new Date()
         });
 
-
         soldItemIds.push(soldItem._id);
-        totalAmount += item.total;
+        totalAmount += totalSellingPrice;
       }
     }
 
-    const sale = await SaleTransaction.create({
+    const saleTransaction = await SaleTransaction.create({
       items: soldItemIds,
-      totalPrice:totalAmount,
+      totalPrice: totalAmount,
+      totalProfit: totalProfit,
       salespersonId: user._id,
       salespersonName: user.name,
       date: new Date()
     });
 
-    console.log("Sale created successfully:", sale);
-    res.status(200).json({ success: true, saleId: sale._id });
+    console.log("Sale created successfully:", saleTransaction);
+    res.status(200).json({ success: true, saleId: saleTransaction._id });
   } catch (err) {
     console.error("Sale update error:", err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const mongoose = require('mongoose');
 

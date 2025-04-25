@@ -6,6 +6,10 @@ const SaleTransactionSchema = new mongoose.Schema({
       id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // optional
       name: { type: String }
     },
+    totalProfit: {
+      type: Number,
+      required: true
+    },
     createdAt: { type: Date, default: Date.now }
   });
   

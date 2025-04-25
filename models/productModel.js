@@ -50,7 +50,13 @@ const productShema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0
+  },
+  purchasePrice: {
+    type: Number,
+    required: true,
+    min: 0
   }
+
 }, {
   timestamps: true
 });

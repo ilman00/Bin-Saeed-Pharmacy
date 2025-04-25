@@ -7,7 +7,9 @@
   <title>Medical Store Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+    crossorigin="anonymous"></script>
   <style>
     .spinner-border {
       width: 1rem;
@@ -40,6 +42,38 @@
       border-radius: 5px;
       transition: all 0.2s ease-in-out;
     }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    table td,
+    table th {
+      padding: 0.4rem 0.5rem;
+      vertical-align: middle;
+    }
+
+    input.form-control {
+      height: 32px;
+      font-size: 0.875rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    tfoot td {
+      background: #f8f9fa;
+      font-size: 1.1rem;
+      color: #000;
+    }
   </style>
 </head>
 
@@ -48,64 +82,71 @@
     <h2 class="mb-4">Medical Order Dashboard</h2>
     <!-- Navbar -->
     <!-- Responsive Navbar -->
-    <nav class="navbar navbar-expand-lg bg-light shadow-sm mb-4" style="height: 40px;">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-semibold" href="#">Dashboard</a>
-        <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-light shadow-sm mb-4" style="height: 40px;">
+        <div class="container-fluid">
+          <a class="navbar-brand fw-semibold" href="/dashboard">Dashboard</a>
+          <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="navbarItems">
-          <ul class="navbar-nav ms-auto gap-lg-4 gap-2 align-items-center">
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="#">
-                <i class="bi bi-plus-circle me-1"></i> Add
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="#">
-                <i class="bi bi-calendar-event me-1"></i> Today Sale
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="#">
-                <i class="bi bi-graph-up-arrow me-1"></i> Profit
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="#">
-                <i class="bi bi-graph-down-arrow me-1"></i> Loss
-              </a>
-            </li>
-          </ul>
+          <div class="collapse navbar-collapse" id="navbarItems">
+            <ul class="navbar-nav ms-auto gap-lg-4 gap-2 align-items-center">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="/add-product">
+                  <i class="bi bi-plus-circle me-1"></i> Add
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="#">
+                  <i class="bi bi-calendar-event me-1"></i> Today Sale
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect"
+                  href="/profit/medicine">
+                  <i class="bi bi-graph-up-arrow me-1"></i> Profit
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="#">
+                  <i class="bi bi-graph-down-arrow me-1"></i> Loss
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
 
+    <div class="table-responsive">
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Brand</th>
-          <th>Formula</th>
-          <th>Price (Rs)</th>
-          <th>Editable Price (Rs)</th>
-          <th>Discount</th>
-          <th>Stock</th>
-          <th>Quantity</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-      <tfoot>
-        <tr>
-          <td colspan="7" class="text-end fw-bold">Grand Total:</td>
-          <td id="grandTotal" class="fw-bold">0.00</td>
-        </tr>
-      </tfoot>
-    </table>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Formula</th>
+            <th>Price (Rs)</th>
+            <th>Editable Price (Rs)</th>
+            <th>Unit</th>
+            <th>Discount</th>
+            <th>Stock</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="7" class="text-end fw-bold">Grand Total:</td>
+            <td id="grandTotal" class="fw-bold">0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
     <div class="d-flex gap-2">
       <button id="submitOrderBtn" class="btn btn-primary d-flex align-items-center gap-2">
         <span>Submit Order</span>
@@ -121,16 +162,30 @@
     function createRow() {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><div class="position-relative"><input class="form-control" data-type="brand" autocomplete="off" /></div></td>
-        <td></td>
-        <td></td>
-        <td><input class="form-control" data-type="price" type="number" /></td>
-        <td><input class="form-control" data-type="discount" placeholder="10% or 15" /></td>
-        <td></td>
-        <td><input class="form-control" data-type="quantity" type="number" value="1" /></td>
-        <td>0.00</td>
-      `;
+  <td><div class="position-relative"><input class="form-control" data-type="brand" autocomplete="off" /></div></td>
+  <td></td>  <!-- Formula -->
+  <td></td>  <!-- Price (original, read-only) -->
+  <td><input class="form-control" data-type="price" type="number" /></td> <!-- Editable price -->
+  <td></td>  <!-- ✅ Unit -->
+  <td><input class="form-control" data-type="discount" placeholder="10% or 15" /></td>
+  <td></td>  <!-- Stock -->
+  <td><input class="form-control" data-type="quantity" type="number" value="1" /></td>
+  <td>0.00</td> <!-- Total -->
+  <td><button class="btn btn-danger btn-sm delete-btn">✖</button></td>
+`;
+
       tableBody.appendChild(row);
+
+      row.querySelector(".delete-btn").addEventListener("click", () => {
+        const totalRows = tableBody.querySelectorAll("tr").length;
+
+        if (totalRows > 1) {
+          row.remove();
+          updateGrandTotal();
+        } else {
+          alert("At least one row is required.");
+        }
+      });
 
       const inputs = row.querySelectorAll("input");
       inputs.forEach((input) => {
@@ -207,11 +262,11 @@
         row.children[1].textContent = medicine.formula;
         row.children[2].textContent = medicine.price.toFixed(2);
         row.querySelector('[data-type="price"]').value = medicine.price;
-        row.children[5].textContent = medicine.stock;
+        row.children[4].textContent = medicine.unit || '';
+        row.children[6].textContent = medicine.stock; // ✅ Correct index for stock
         calculateRowTotal(row);
       }
     }
-
 
     function moveToNextInput(currentInput, row) {
       const inputs = row.querySelectorAll("input");
@@ -224,9 +279,15 @@
     }
 
     function calculateRowTotal(row) {
-      const price = parseFloat(row.querySelector('[data-type="price"]').value) || 0;
-      const discountInput = row.querySelector('[data-type="discount"]').value.trim().toLowerCase();
-      const quantity = parseInt(row.querySelector('[data-type="quantity"]').value) || 1;
+      const priceInput = row.querySelector('[data-type="price"]');
+      const discountInputEl = row.querySelector('[data-type="discount"]');
+      const quantityInput = row.querySelector('[data-type="quantity"]');
+
+      if (!priceInput || !discountInputEl || !quantityInput) return;
+
+      const price = parseFloat(priceInput.value) || 0;
+      const discountInput = discountInputEl.value.trim().toLowerCase();
+      const quantity = parseInt(quantityInput.value) || 1;
 
       let discount = 0;
       if (discountInput.endsWith("%")) {
@@ -238,15 +299,15 @@
       }
 
       const finalPrice = Math.max(price - discount, 0);
-      const total = finalPrice * quantity;
-      row.children[7].textContent = total.toFixed(2);
+      const total = Math.round(finalPrice * quantity); // 👈 Round to nearest integer
+      row.children[8].textContent = total.toFixed(0); // 👈 Show integer only
       updateGrandTotal();
     }
 
     function updateGrandTotal() {
       let total = 0;
       tableBody.querySelectorAll("tr").forEach(row => {
-        total += parseFloat(row.children[7].textContent) || 0;
+        total += parseFloat(row.children[8].textContent) || 0;
       });
       document.getElementById("grandTotal").textContent = total.toFixed(2);
     }
@@ -310,7 +371,11 @@
         .then(res => res.json())
         .then(result => {
           console.log("Saved:", result);
-          window.location.href = `/reciept?saleId=${result.saleId}`;
+          if (result.success && result.saleId) {
+            window.location.href = `/reciept?saleId=${result.saleId}`;
+          } else {
+            alert("Failed to save order. Please try again.");
+          }
         })
         .catch(err => {
           alert("Failed to submit order.");

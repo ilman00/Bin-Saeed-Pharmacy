@@ -14,6 +14,9 @@ const searchMed = require('./routes/searchMed')
 require('./config/passport');
 const authRoutes = require('./routes/auth');
 const edit_med = require('./routes/edit')
+const profit = require('./routes/profitRoute')
+
+
 
 app.use(cors());
 // Set view engine
@@ -46,7 +49,7 @@ app.use(sales)
 app.use(searchMed)
 app.use(authRoutes);
 app.use(edit_med)
-
+app.use(profit)
 
 
 

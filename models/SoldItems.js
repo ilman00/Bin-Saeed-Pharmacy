@@ -7,6 +7,15 @@ const SoldItemSchema = new mongoose.Schema({
   quantity: { type: Number, default: 1 },
   total: { type: Number, required: true }, // price after discount * quantity
   stockAtTimeOfSale: { type: Number }, // optional
+  // SoldItem schema (add these)
+  purchasePrice: {
+    type: Number,
+    required: true
+  },
+  profit: {
+    type: Number,
+    required: true
+  },
   saleDate: { type: Date, default: Date.now }
 });
 
