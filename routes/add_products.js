@@ -13,26 +13,30 @@ route.get('/add-product', (req, res) => {
 route.post('/add-product', async (req, res) => {
     try {
         const {
-            name,
+            brand,
+            formula,
             category,
             Batch,
             manufacturer,
-            expiry,
+            expiryDate,
             stock,
+            unit,
             price,
-            dosage,
+            purchasePrice,
             discription
         } = req.body;
 
         const newMedicine = new ProductModel({
-            name,
+            brand,
+            formula,
             category,
             Batch,
             manufacturer,
-            expiry,
+            expiryDate,
             stock,
+            unit,
             price,
-            dosage,
+            purchasePrice,
             discription
         });
 

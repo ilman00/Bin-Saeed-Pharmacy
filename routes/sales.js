@@ -3,12 +3,16 @@ const ProductModel = require('../models/productModel');
 const SoldItem = require('../models/SoldItems');
 const SaleTransaction = require('../models/SaleTransaction');
 const route = express.Router()
+const  isAuthenticated = require('../middlewares/auth')
 
-route.get('/sale-page', (req, res) => {
+route.get('/sale-page', isAuthenticated, (req, res) => {
+  const user = req.user;
+  console.log('From sale.js',user);
+
   res.render('sale')
 })
 
-route.get('/api/sale', async (req, res) => {
+route.get('/api/sale' ,async (req, res) => {
   try {
     const query = req.query.query;
     const data = await ProductModel.find({ brand: { $regex: query, $options: 'i' } })
@@ -70,6 +74,8 @@ route.post('/api/sale/update', async (req, res) => {
           total: totalSellingPrice,
           purchasePrice: med.purchasePrice,
           profit: profit,
+          salespersonId: user._id,
+          salespersonName: user.name,
           date: new Date()
         });
 

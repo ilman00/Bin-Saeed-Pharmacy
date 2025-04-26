@@ -16,6 +16,10 @@ const SoldItemSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  salesperson: {
+    id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // optional
+    name: { type: String }
+  },
   saleDate: { type: Date, default: Date.now }
 });
 

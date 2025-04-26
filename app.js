@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -15,8 +16,8 @@ require('./config/passport');
 const authRoutes = require('./routes/auth');
 const edit_med = require('./routes/edit')
 const profit = require('./routes/profitRoute')
-
-
+const loss = require('./routes/lossRoute')
+const lending = require('./routes/lendingRoute')
 
 app.use(cors());
 // Set view engine
@@ -35,7 +36,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: 'mongodb://127.0.0.1:27017/pharmacy', // or use your MongoDB Atlas URL
+    mongoUrl: process.env.MONGODB_URL, // or use your MongoDB Atlas URL
     ttl: 14 * 24 * 60 * 60, // Optional: session expiry in seconds (14 days)
   })
 }));
@@ -50,12 +51,15 @@ app.use(searchMed)
 app.use(authRoutes);
 app.use(edit_med)
 app.use(profit)
+app.use(loss)
+app.use(lending)
 
 
 
-
-
-
+app.get('/', (req, res) => {
+  const user = req.user
+  res.render('landingPage', {user});
+});
 
 
 

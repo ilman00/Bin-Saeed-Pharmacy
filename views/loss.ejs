@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+  <title>Loss Report</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="container my-4">
+    <h2 class="mb-4">📉 Loss Report (PKR)</h2>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-danger">
+        <tr>
+          <th>#</th>
+          <th>Brand</th>
+          <th>Formula</th>
+          <th>Purchase Price</th>
+          <th>Sale Price</th>
+          <th>Quantity</th>
+          <th>Total Loss (PKR)</th>
+          <th>Sale Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% lossItems.forEach((item, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= item.brand %></td>
+            <td><%= item.formula %></td>
+            <td>₨<%= item.purchasePrice %></td>
+            <td>₨<%= item.price %></td>
+            <td><%= item.quantity %></td>
+            <td class="text-danger">₨<%= item.loss.toFixed(2) %></td>
+            <td><%= item.saleDate.toLocaleDateString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="alert alert-danger fw-bold fs-5">
+      Total Loss: ₨<%= totalLoss.toFixed(2) %>
+    </div>
+  </div>
+
+</body>
+</html>
