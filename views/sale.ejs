@@ -241,7 +241,7 @@
         const value = input.value.trim();
         if (!value) return;
 
-        fetch(`http://localhost:5000/api/sale?query=${encodeURIComponent(value)}`)
+        fetch(`https://bin-saeed-pharmacy.onrender.com/api/sale?query=${encodeURIComponent(value)}`)
           .then(res => res.json())
           .then(matches => {
             let suggestionBox = input.nextElementSibling;
@@ -392,7 +392,7 @@
 
       function sendToBackend(data, callback) {
         console.log(data);
-        fetch("http://localhost:5000/api/sale/update", {
+        fetch("https://bin-saeed-pharmacy.onrender.com/api/sale/update", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ items: data })
@@ -483,7 +483,7 @@
 
         const grandTotal = parseFloat(document.getElementById("grandTotal").textContent);
 
-        fetch("http://localhost:5000/api/lend", {
+        fetch("https://bin-saeed-pharmacy.onrender.com/api/lend", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
