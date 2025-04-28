@@ -24,7 +24,6 @@ const productShema = new mongoose.Schema({
       'Fever',
       'Analgesic'
     ],
-    required: true
   },
   batchNumber: {
     type: String,
@@ -43,7 +42,17 @@ const productShema = new mongoose.Schema({
   },
   unit: {
     type: String,
-    enum: ['per strip', 'per tablet', 'per pack', 'per unit'],
+    enum: [
+      "per strip", 
+      "per tablet", 
+      "per unit", 
+      "per pack",
+      "per bottle", 
+      "per jar", 
+      "per tube", 
+      "per box", 
+      "per piece"
+    ],
     required: true
   },
   price: {
@@ -55,6 +64,13 @@ const productShema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0
+  },
+  type: {
+    type: String,
+    enum: ['medicine', 'cosmetic']
+  },
+  description: {
+    type: String,
   }
 
 }, {

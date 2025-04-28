@@ -3,21 +3,28 @@ const ProductModel = require('../models/productModel');
 const SoldItem = require('../models/SoldItems');
 const SaleTransaction = require('../models/SaleTransaction');
 const route = express.Router()
-const  isAuthenticated = require('../middlewares/auth')
+const isAuthenticated = require('../middlewares/auth')
 
 route.get('/sale-page', isAuthenticated, (req, res) => {
   const user = req.user;
-  console.log('From sale.js',user);
 
   res.render('sale')
 })
 
-route.get('/api/sale' ,async (req, res) => {
+route.get('/api/sale', async (req, res) => {
   try {
-    const query = req.query.query;
-    const data = await ProductModel.find({ brand: { $regex: query, $options: 'i' } })
-    console.log("log from sale : ", data[0]);
-    res.status(200).json(data)
+    const { query, type } = req.query;
+
+    const filter = {
+      brand: new RegExp(query, 'i') // brand name search
+    };
+
+    if (type) {
+      filter.type = type; // type is either 'medicine' or 'cosmetic'
+    }
+
+    const products = await ProductModel.find(filter).limit(10);
+    res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
@@ -41,6 +48,8 @@ route.post('/api/sale/update', async (req, res) => {
     const soldItemIds = [];
     let totalAmount = 0;
     let totalProfit = 0;
+
+    console.log(items);
 
     for (const item of items) {
       const med = await ProductModel.findOne({ brand: item.brand });
@@ -74,8 +83,10 @@ route.post('/api/sale/update', async (req, res) => {
           total: totalSellingPrice,
           purchasePrice: med.purchasePrice,
           profit: profit,
-          salespersonId: user._id,
-          salespersonName: user.name,
+          salesperson: {
+            id: user._id,
+            name: user.username
+          },
           date: new Date()
         });
 
@@ -88,8 +99,10 @@ route.post('/api/sale/update', async (req, res) => {
       items: soldItemIds,
       totalPrice: totalAmount,
       totalProfit: totalProfit,
-      salespersonId: user._id,
-      salespersonName: user.name,
+      salesperson: {
+        id: user._id,
+        name: user.username
+      },
       date: new Date()
     });
 

@@ -73,80 +73,50 @@
       <h2 class="mb-4">Medical Order Dashboard</h2>
       <!-- Navbar -->
       <!-- Responsive Navbar -->
-      <header>
-        <nav class="navbar navbar-expand-lg bg-light shadow-sm mb-4"">
-          <div class="container-fluid">
-            <a class="navbar-brand fw-semibold" href="/dashboard">Dashboard</a>
-            <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false"
-              aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
+      <%- include('partials/navbar') %>
 
-            <div class="collapse navbar-collapse" id="navbarItems">
-              <ul class="navbar-nav ms-auto gap-lg-4 gap-2 align-items-center">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="/add-product">
-                    <i class="bi bi-plus-circle me-1"></i> Add
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="#">
-                    <i class="bi bi-calendar-event me-1"></i> Today Sale
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect"
-                    href="/profit/medicine">
-                    <i class="bi bi-graph-up-arrow me-1"></i> Profit
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center text-dark fw-semibold hover-effect" href="/loss">
-                    <i class="bi bi-graph-down-arrow me-1"></i> Loss
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </header>
-
-      <div class="table-responsive">
-
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Brand</th>
-              <th>Formula</th>
-              <th>Price (Rs)</th>
-              <th>Editable Price (Rs)</th>
-              <th>Unit</th>
-              <th>Discount</th>
-              <th>Stock</th>
-              <th>Quantity</th>
-              <th>Total</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="7" class="text-end fw-bold">Grand Total:</td>
-              <td id="grandTotal" class="fw-bold">0.00</td>
-            </tr>
-          </tfoot>
-        </table>
+    <div class="table-responsive">
+      <div class="mb-3">
+        <label for="productType" class="form-label">Product Type:</label>
+        <select id="productType" class="form-select" style="max-width: 250px;">
+          <option value="medicine">Medicine</option>
+          <option value="cosmetic">Cosmetic</option>
+        </select>
       </div>
-      <div class="d-flex gap-2">
-        <button id="submitOrderBtn" class="btn btn-primary d-flex align-items-center gap-2">
-          <span>Submit Order</span>
-          <div id="submitSpinner" class="spinner-border d-none" role="status"></div>
-        </button>
-        <button id="lendBtn" class="btn btn-warning">Lend</button>
 
-        <button id="resetBtn" class="btn btn-secondary">Reset</button>
-      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Formula</th>
+            <th>Price (Rs)</th>
+            <th>Editable Price (Rs)</th>
+            <th>Unit</th>
+            <th>Discount</th>
+            <th>Stock</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="7" class="text-end fw-bold">Grand Total:</td>
+            <td id="grandTotal" class="fw-bold">0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="d-flex gap-2">
+      <button id="submitOrderBtn" class="btn btn-primary d-flex align-items-center gap-2">
+        <span>Submit Order</span>
+        <div id="submitSpinner" class="spinner-border d-none" role="status"></div>
+      </button>
+      <button id="lendBtn" class="btn btn-warning">Lend</button>
+
+      <button id="resetBtn" class="btn btn-secondary">Reset</button>
+    </div>
     </div>
 
 
@@ -186,6 +156,11 @@
 
 
     <script>
+
+      const baseUrl = 'https://bin-saeed-pharmacy.onrender.com'
+      // const baseUrl = 'http://localhost:5000'
+
+
       const tableBody = document.getElementById("tableBody");
 
       function createRow() {
@@ -237,11 +212,14 @@
         row.querySelector('[data-type="brand"]').focus();
       }
 
+
       function showSuggestions(input, row) {
         const value = input.value.trim();
         if (!value) return;
 
-        fetch(`https://bin-saeed-pharmacy.onrender.com/api/sale?query=${encodeURIComponent(value)}`)
+        const productType = document.getElementById('productType').value; // 👈 get selected type
+
+        fetch(`${baseUrl}/api/sale?query=${encodeURIComponent(value)}&type=${productType}`) // 👈 pass type
           .then(res => res.json())
           .then(matches => {
             let suggestionBox = input.nextElementSibling;
@@ -258,21 +236,19 @@
               div.addEventListener("click", () => {
                 const selectedMed = matches[index];
                 input.value = selectedMed.brand;
-                input.selectedMedicine = selectedMed; // ✅ Store selected medicine
+                input.selectedMedicine = selectedMed;
                 fillMedicineDetails(row, selectedMed);
                 suggestionBox.style.display = "none";
               });
-
             });
 
-            // Add Enter key support
             input.onkeydown = function (e) {
               if (e.key === "Enter") {
                 e.preventDefault();
                 if (matches.length > 0) {
                   const selectedMed = matches[0];
                   input.value = selectedMed.brand;
-                  input.selectedMedicine = selectedMed; // ✅ Store selected medicine
+                  input.selectedMedicine = selectedMed;
                   fillMedicineDetails(row, selectedMed);
                   suggestionBox.style.display = "none";
                   moveToNextInput(input, row);
@@ -282,9 +258,11 @@
 
           })
           .catch(error => {
-            console.error("Error fetching medicine data:", error);
+            console.error("Error fetching product data:", error);
           });
       }
+
+
 
       function fillMedicineDetails(row, medicine) {
         if (medicine) {
@@ -392,7 +370,7 @@
 
       function sendToBackend(data, callback) {
         console.log(data);
-        fetch("https://bin-saeed-pharmacy.onrender.com/api/sale/update", {
+        fetch(`${baseUrl}/api/sale/update`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ items: data })
@@ -483,7 +461,7 @@
 
         const grandTotal = parseFloat(document.getElementById("grandTotal").textContent);
 
-        fetch("https://bin-saeed-pharmacy.onrender.com/api/lend", {
+        fetch(`${baseUrl}/api/lend`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

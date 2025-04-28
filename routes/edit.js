@@ -27,10 +27,10 @@ route.post('/edit', async (req, res) => {
         type
       });
   
-      res.redirect('/dashboard'); // or wherever you want to go after editing
+      res.redirect('/dashboard?success=true'); // or wherever you want to go after editing
     } catch (err) {
       console.error(err);
-      res.status(500).send("Failed to update medicine");
+      res.redirect('/dashboard?success=false');
     }
   });
   

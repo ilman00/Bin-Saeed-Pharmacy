@@ -18,6 +18,9 @@ const edit_med = require('./routes/edit')
 const profit = require('./routes/profitRoute')
 const loss = require('./routes/lossRoute')
 const lending = require('./routes/lendingRoute')
+const history = require('./routes/historyRoute')
+const deleteProduct = require('./routes/deleteProduct')
+const todaySale = require('./routes/todaySaleRoute')
 
 app.use(cors());
 // Set view engine
@@ -31,12 +34,15 @@ app.use(express.json());
 // Static files (CSS, JS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
+const mongodb = process.env.MONGODB_URI
+
 app.use(session({
   secret: 'yourSecret',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URL, // or use your MongoDB Atlas URL
+    mongoUrl: mongodb, // or use your MongoDB Atlas URL
     ttl: 14 * 24 * 60 * 60, // Optional: session expiry in seconds (14 days)
   })
 }));
@@ -53,12 +59,14 @@ app.use(edit_med)
 app.use(profit)
 app.use(loss)
 app.use(lending)
-
+app.use(history)
+app.use(deleteProduct)
+app.use(todaySale)
 
 
 app.get('/', (req, res) => {
   const user = req.user
-  res.render('landingPage', {user});
+  res.render('landingPage', { user });
 });
 
 

@@ -1,79 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Sell Medicines</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .qty-input {
-      width: 80px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
-<body class="bg-light">
 
-  <div class="container mt-5">
-    <h2 class="mb-4">Sell Medicines</h2>
+<body>
+  <div class="container my-4">
+    <h2>Sale Page</h2>
 
-    <form action="/sale/confirm" method="POST">
-      <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-          <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Available</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <% medicines.forEach((med, index) => { %> -->
-          <tr>
-            <!-- <td><%= med.name %></td>
-            <td><%= med.category %></td>
-            <td><%= med.stock %></td>
-            <td>$<%= med.price %></td> -->
-            <td>medicine name</td>
-            <td>Category</td>
-            <td>Stock</td>
-            <td>Price</td>
-            <td>
-              <input type="hidden" name="items[][id]" value="">
-              <input type="hidden" name="items[][name]" value="">
-              <input type="hidden" name="items[][price]" value="">
-              <input type="number" class="form-control qty-input" name="items[<%= index %>][quantity]" min="0" max="" value="0" onchange="calculateTotal()">
-            </td>
-            <td class="subtotal">$0.00</td>
-          </tr>
-          <!-- <% }) %> -->
-        </tbody>
-      </table>
+    <!-- Type Selection -->
+    <div class="mb-3">
+      <label for="productType" class="form-label fw-bold">Select Product Type</label>
+      <select id="productType" class="form-select">
+        <option value="Medicine">Medicine</option>
+        <option value="Cosmetic">Cosmetic</option>
+      </select>
+    </div>
 
-      <div class="d-flex justify-content-between align-items-center mt-4">
-        <h4>Total: <span id="totalPrice">$0.00</span></h4>
-        <button type="submit" class="btn btn-success btn-lg">Confirm Sale</button>
-      </div>
-    </form>
+    <!-- Product Search -->
+    <div class="mb-3">
+      <label for="productSearch" class="form-label fw-bold">Search Product</label>
+      <input type="text" id="productSearch" class="form-control" placeholder="Search by Brand...">
+    </div>
+
+    <!-- Sale Table -->
+    <table class="table table-bordered" id="saleTable">
+      <thead class="table-secondary">
+        <tr>
+          <th>Brand</th>
+          <th>Price (PKR)</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="saleTableBody">
+        <!-- Sale items will be added here dynamically -->
+      </tbody>
+    </table>
+
   </div>
-
   <script>
-    function calculateTotal() {
-      let total = 0;
-      const rows = document.querySelectorAll('tbody tr');
+    const productTypeSelect = document.getElementById('productType');
+    const productSearchInput = document.getElementById('productSearch');
+    const saleTableBody = document.getElementById('saleTableBody');
 
-      rows.forEach(row => {
-        const qtyInput = row.querySelector('input[type="number"]');
-        const price = parseFloat(row.querySelector('input[name$="[price]"]').value);
-        const quantity = parseInt(qtyInput.value) || 0;
-        const subtotal = quantity * price;
-        row.querySelector('.subtotal').innerText = `$${subtotal.toFixed(2)}`;
-        total += subtotal;
+    let selectedType = 'Medicine'; // Default
+
+    productTypeSelect.addEventListener('change', (e) => {
+      selectedType = e.target.value;
+      productSearchInput.value = '';
+      // Clear table when type changes (optional)
+      saleTableBody.innerHTML = '';
+    });
+
+    productSearchInput.addEventListener('input', async (e) => {
+      const searchQuery = e.target.value.trim();
+
+      if (searchQuery.length < 2) {
+        // If search text is too short, don't search
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/products?type=${selectedType}&brand=${searchQuery}`);
+        const products = await response.json();
+        displayProducts(products);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    });
+
+    function displayProducts(products) {
+      saleTableBody.innerHTML = '';
+
+      products.forEach(product => {
+        const total = (product.price * 1).toFixed(2); // default quantity 1
+        saleTableBody.innerHTML += `
+      <tr>
+        <td>${product.brand}</td>
+        <td>₨${product.price}</td>
+        <td><input type="number" value="1" min="1" class="form-control quantity-input" data-price="${product.price}"></td>
+        <td class="total-cell">₨${total}</td>
+      </tr>
+    `;
       });
 
-      document.getElementById('totalPrice').innerText = `$${total.toFixed(2)}`;
+      updateTotals();
     }
-  </script>
 
+    function updateTotals() {
+      document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('input', function () {
+          const price = parseFloat(this.getAttribute('data-price'));
+          const quantity = parseInt(this.value) || 1;
+          const totalCell = this.closest('tr').querySelector('.total-cell');
+          totalCell.textContent = `₨${(price * quantity).toFixed(2)}`;
+        });
+      });
+    }
+
+  </script>
 </body>
+
 </html>

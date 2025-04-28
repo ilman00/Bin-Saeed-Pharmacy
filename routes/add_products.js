@@ -23,6 +23,7 @@ route.post('/add-product', async (req, res) => {
             unit,
             price,
             purchasePrice,
+            type,
             discription
         } = req.body;
 
@@ -37,15 +38,16 @@ route.post('/add-product', async (req, res) => {
             unit,
             price,
             purchasePrice,
+            type,
             discription
         });
 
         await newMedicine.save();
 
-        res.redirect('/dashboard'); // redirect to home or inventory list
+        res.redirect('/add-product?success=true'); // redirect to home or inventory list
     } catch (err) {
         console.error('Error adding medicine:', err);
-        res.status(500).send('Server Error');
+        res.redirect('/add-product?success=false');
     }
 });
 
