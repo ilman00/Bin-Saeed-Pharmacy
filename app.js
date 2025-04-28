@@ -35,14 +35,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
-const mongodb = process.env.MONGODB_URI
+// const mongodb = 
 
 app.use(session({
   secret: 'yourSecret',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: mongodb, // or use your MongoDB Atlas URL
+    mongoUrl: process.env.MONGODB_URL, // or use your MongoDB Atlas URL
     ttl: 14 * 24 * 60 * 60, // Optional: session expiry in seconds (14 days)
   })
 }));
