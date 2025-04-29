@@ -18,12 +18,13 @@
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Formula</label>
-                  <input type="text" name="formula" class="form-control" placeholder="e.g.	Azithromycin" required>
+                  <input type="text" name="formula" class="form-control" placeholder="e.g.	Azithromycin" >
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Category</label>
-                  <select class="form-select" name="category">
+                  <select class="form-select" name="category" required>
                     <option selected disabled>Select Category</option>
+                    <option value="Cosmetic">Cosmetic</option>
                     <option value="Antibiotic">Antibiotic</option>
                     <option value="Antacid">Antacid</option>
                     <option value="Painkiller">Painkiller</option>
@@ -43,15 +44,15 @@
               <div class="row mb-3">
                 <div class="col-md-4">
                   <label class="form-label">Batch Number</label>
-                  <input type="text" name="batchNumber" class="form-control" placeholder="e.g. B1234" required>
+                  <input type="text" name="batchNumber" class="form-control" placeholder="e.g. B1234">
                 </div>
                 <div class="col-md-4">
                   <label class="form-label">Manufacturer</label>
-                  <input type="text" class="form-control" name="manufacturer" placeholder="e.g. XYZ Pharma" required>
+                  <input type="text" class="form-control" name="manufacturer" placeholder="e.g. XYZ Pharma">
                 </div>
                 <div class="col-md-4">
                   <label class="form-label">Expiry Date</label>
-                  <input type="date" name="expiryDate" class="form-control" required>
+                  <input type="date" name="expiryDate" class="form-control">
                 </div>
               </div>
 
@@ -59,9 +60,9 @@
                 <div class="col-md-4">
 
                   <label class="form-label" >Type</label>
-                  <select class="form-select" name="type">
+                  <select class="form-select" name="type" required>
                     <option value="medicine" selected>medicine</option>
-                    <option value="cosmetics">Cosmetic</option>
+                    <option value="cosmetic">Cosmetic</option>
                   </select>
                 </div>
                 <div class="col-md-4">

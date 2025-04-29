@@ -22,8 +22,10 @@ const productShema = new mongoose.Schema({
       'Antihypertensive',
       'Blood Thinner',
       'Fever',
-      'Analgesic'
+      'Analgesic',
+      'Cosmetic'
     ],
+    default: null
   },
   batchNumber: {
     type: String,

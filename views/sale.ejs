@@ -75,48 +75,48 @@
       <!-- Responsive Navbar -->
       <%- include('partials/navbar') %>
 
-    <div class="table-responsive">
-      <div class="mb-3">
-        <label for="productType" class="form-label">Product Type:</label>
-        <select id="productType" class="form-select" style="max-width: 250px;">
-          <option value="medicine">Medicine</option>
-          <option value="cosmetic">Cosmetic</option>
-        </select>
-      </div>
+        <div class="table-responsive">
+          <div class="mb-3">
+            <label for="productType" class="form-label">Product Type:</label>
+            <select id="productType" class="form-select" style="max-width: 250px;">
+              <option value="medicine">Medicine</option>
+              <option value="cosmetic">Cosmetic</option>
+            </select>
+          </div>
 
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Brand</th>
-            <th>Formula</th>
-            <th>Price (Rs)</th>
-            <th>Editable Price (Rs)</th>
-            <th>Unit</th>
-            <th>Discount</th>
-            <th>Stock</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-        <tfoot>
-          <tr>
-            <td colspan="7" class="text-end fw-bold">Grand Total:</td>
-            <td id="grandTotal" class="fw-bold">0.00</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="d-flex gap-2">
-      <button id="submitOrderBtn" class="btn btn-primary d-flex align-items-center gap-2">
-        <span>Submit Order</span>
-        <div id="submitSpinner" class="spinner-border d-none" role="status"></div>
-      </button>
-      <button id="lendBtn" class="btn btn-warning">Lend</button>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Brand</th>
+                <th>Formula</th>
+                <th>Price (Rs)</th>
+                <th>Editable Price (Rs)</th>
+                <th>Unit</th>
+                <th>Discount</th>
+                <th>Stock</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7" class="text-end fw-bold">Grand Total:</td>
+                <td id="grandTotal" class="fw-bold">0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="d-flex gap-2">
+          <button id="submitOrderBtn" class="btn btn-primary d-flex align-items-center gap-2">
+            <span>Submit Order</span>
+            <div id="submitSpinner" class="spinner-border d-none" role="status"></div>
+          </button>
+          <button id="lendBtn" class="btn btn-warning">Lend</button>
 
-      <button id="resetBtn" class="btn btn-secondary">Reset</button>
-    </div>
+          <button id="resetBtn" class="btn btn-secondary">Reset</button>
+        </div>
     </div>
 
 
@@ -142,11 +142,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
 
 
 
