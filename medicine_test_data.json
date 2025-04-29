@@ -1,802 +1,272 @@
 [
   {
-    "name": "Medicine Product 1",
-    "category": "Capsule",
-    "stock": 101,
-    "expiry": "2026-12-02",
-    "price": 1.8,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 2",
-    "category": "Syrup",
-    "stock": 102,
-    "expiry": "2026-12-03",
-    "price": 2.1,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 3",
-    "category": "Injection",
-    "stock": 103,
-    "expiry": "2026-12-04",
-    "price": 2.4,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 4",
-    "category": "Ointment",
-    "stock": 104,
-    "expiry": "2026-12-05",
-    "price": 2.7,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 5",
-    "category": "Cream",
-    "stock": 105,
-    "expiry": "2026-12-06",
-    "price": 3.0,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 6",
-    "category": "Lotion",
-    "stock": 106,
-    "expiry": "2026-12-07",
-    "price": 3.3,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 7",
-    "category": "Gel",
-    "stock": 107,
-    "expiry": "2026-12-08",
-    "price": 3.6,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 8",
-    "category": "Spray",
-    "stock": 108,
-    "expiry": "2026-12-09",
-    "price": 3.9,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 9",
-    "category": "Powder",
-    "stock": 109,
-    "expiry": "2026-12-10",
-    "price": 4.2,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 10",
-    "category": "Tablet",
-    "stock": 110,
-    "expiry": "2026-12-11",
-    "price": 4.5,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 11",
-    "category": "Capsule",
-    "stock": 111,
-    "expiry": "2026-12-12",
-    "price": 4.8,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 12",
-    "category": "Syrup",
-    "stock": 112,
-    "expiry": "2026-12-13",
-    "price": 5.1,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 13",
-    "category": "Injection",
-    "stock": 113,
-    "expiry": "2026-12-14",
-    "price": 5.4,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 14",
-    "category": "Ointment",
-    "stock": 114,
-    "expiry": "2026-12-15",
-    "price": 5.7,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 15",
-    "category": "Cream",
-    "stock": 115,
-    "expiry": "2026-12-16",
-    "price": 6.0,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 16",
-    "category": "Lotion",
-    "stock": 116,
-    "expiry": "2026-12-17",
-    "price": 6.3,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 17",
-    "category": "Gel",
-    "stock": 117,
-    "expiry": "2026-12-18",
-    "price": 6.6,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 18",
-    "category": "Spray",
-    "stock": 118,
-    "expiry": "2026-12-19",
-    "price": 6.9,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 19",
-    "category": "Powder",
-    "stock": 119,
-    "expiry": "2026-12-20",
-    "price": 7.2,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 20",
-    "category": "Tablet",
-    "stock": 120,
-    "expiry": "2026-12-21",
-    "price": 7.5,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 21",
-    "category": "Capsule",
-    "stock": 121,
-    "expiry": "2026-12-22",
-    "price": 7.8,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 22",
-    "category": "Syrup",
-    "stock": 122,
-    "expiry": "2026-12-23",
-    "price": 8.1,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 23",
-    "category": "Injection",
-    "stock": 123,
-    "expiry": "2026-12-24",
-    "price": 8.4,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 24",
-    "category": "Ointment",
-    "stock": 124,
-    "expiry": "2026-12-25",
-    "price": 8.7,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 25",
-    "category": "Cream",
-    "stock": 125,
-    "expiry": "2026-12-26",
-    "price": 9.0,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 26",
-    "category": "Lotion",
-    "stock": 126,
-    "expiry": "2026-12-27",
-    "price": 9.3,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 27",
-    "category": "Gel",
-    "stock": 127,
-    "expiry": "2026-12-28",
-    "price": 9.6,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 28",
-    "category": "Spray",
-    "stock": 128,
-    "expiry": "2026-12-01",
-    "price": 9.9,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 29",
-    "category": "Powder",
-    "stock": 129,
-    "expiry": "2026-12-02",
-    "price": 10.2,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 30",
-    "category": "Tablet",
-    "stock": 130,
-    "expiry": "2026-12-03",
-    "price": 10.5,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 31",
-    "category": "Capsule",
-    "stock": 131,
-    "expiry": "2026-12-04",
-    "price": 10.8,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 32",
-    "category": "Syrup",
-    "stock": 132,
-    "expiry": "2026-12-05",
-    "price": 11.1,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 33",
-    "category": "Injection",
-    "stock": 133,
-    "expiry": "2026-12-06",
-    "price": 11.4,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 34",
-    "category": "Ointment",
-    "stock": 134,
-    "expiry": "2026-12-07",
-    "price": 11.7,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 35",
-    "category": "Cream",
-    "stock": 135,
-    "expiry": "2026-12-08",
-    "price": 12.0,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 36",
-    "category": "Lotion",
-    "stock": 136,
-    "expiry": "2026-12-09",
-    "price": 12.3,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 37",
-    "category": "Gel",
-    "stock": 137,
-    "expiry": "2026-12-10",
-    "price": 12.6,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 38",
-    "category": "Spray",
-    "stock": 138,
-    "expiry": "2026-12-11",
-    "price": 12.9,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 39",
-    "category": "Powder",
-    "stock": 139,
-    "expiry": "2026-12-12",
-    "price": 13.2,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 40",
-    "category": "Tablet",
-    "stock": 140,
-    "expiry": "2026-12-13",
-    "price": 13.5,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 41",
-    "category": "Capsule",
-    "stock": 141,
-    "expiry": "2026-12-14",
-    "price": 13.8,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 42",
-    "category": "Syrup",
-    "stock": 142,
-    "expiry": "2026-12-15",
-    "price": 14.1,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 43",
-    "category": "Injection",
-    "stock": 143,
-    "expiry": "2026-12-16",
-    "price": 14.4,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 44",
-    "category": "Ointment",
-    "stock": 144,
-    "expiry": "2026-12-17",
-    "price": 14.7,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 45",
-    "category": "Cream",
-    "stock": 145,
-    "expiry": "2026-12-18",
-    "price": 15.0,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 46",
-    "category": "Lotion",
-    "stock": 146,
-    "expiry": "2026-12-19",
-    "price": 15.3,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 47",
-    "category": "Gel",
-    "stock": 147,
-    "expiry": "2026-12-20",
-    "price": 15.6,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 48",
-    "category": "Spray",
-    "stock": 148,
-    "expiry": "2026-12-21",
-    "price": 15.9,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 49",
-    "category": "Powder",
-    "stock": 149,
-    "expiry": "2026-12-22",
-    "price": 16.2,
-    "type": "medicine"
-  },
-  {
-    "name": "Medicine Product 50",
-    "category": "Tablet",
-    "stock": 150,
-    "expiry": "2026-12-23",
-    "price": 16.5,
-    "type": "medicine"
-  },
-  {
-    "name": "Cosmetic Product 1",
-    "category": "Shampoo",
-    "stock": 81,
-    "expiry": "2027-06-02",
-    "price": 3.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 2",
-    "category": "Conditioner",
-    "stock": 82,
-    "expiry": "2027-06-03",
-    "price": 3.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 3",
-    "category": "Lipstick",
-    "stock": 83,
-    "expiry": "2027-06-04",
-    "price": 4.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 4",
-    "category": "Nail Polish",
-    "stock": 84,
-    "expiry": "2027-06-05",
-    "price": 4.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 5",
-    "category": "Perfume",
-    "stock": 85,
-    "expiry": "2027-06-06",
-    "price": 5.0,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 6",
-    "category": "Body Lotion",
-    "stock": 86,
-    "expiry": "2027-06-07",
-    "price": 5.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 7",
-    "category": "Sunscreen",
-    "stock": 87,
-    "expiry": "2027-06-08",
-    "price": 5.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 8",
-    "category": "Moisturizer",
-    "stock": 88,
-    "expiry": "2027-06-09",
-    "price": 6.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 9",
-    "category": "Hair Oil",
-    "stock": 89,
-    "expiry": "2027-06-10",
-    "price": 6.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 10",
-    "category": "Face Wash",
-    "stock": 90,
-    "expiry": "2027-06-11",
-    "price": 7.0,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 11",
-    "category": "Shampoo",
-    "stock": 91,
-    "expiry": "2027-06-12",
-    "price": 7.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 12",
-    "category": "Conditioner",
-    "stock": 92,
-    "expiry": "2027-06-13",
-    "price": 7.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 13",
-    "category": "Lipstick",
-    "stock": 93,
-    "expiry": "2027-06-14",
-    "price": 8.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 14",
-    "category": "Nail Polish",
-    "stock": 94,
-    "expiry": "2027-06-15",
-    "price": 8.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 15",
-    "category": "Perfume",
-    "stock": 95,
-    "expiry": "2027-06-16",
-    "price": 9.0,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 16",
-    "category": "Body Lotion",
-    "stock": 96,
-    "expiry": "2027-06-17",
-    "price": 9.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 17",
-    "category": "Sunscreen",
-    "stock": 97,
-    "expiry": "2027-06-18",
-    "price": 9.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 18",
-    "category": "Moisturizer",
-    "stock": 98,
-    "expiry": "2027-06-19",
-    "price": 10.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 19",
-    "category": "Hair Oil",
-    "stock": 99,
-    "expiry": "2027-06-20",
-    "price": 10.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 20",
-    "category": "Face Wash",
+    "brand": "Voren",
+    "formula": "Diclofenac Sodium",
+    "category": "Painkiller",
+    "manufacturer": "Searle",
+    "expiryDate": "2026-06-29T00:00:00.000Z",
     "stock": 100,
-    "expiry": "2027-06-21",
-    "price": 11.0,
-    "type": "cosmetic"
+    "unit": "per strip",
+    "price": 120,
+    "purchasePrice": 80,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
   },
   {
-    "name": "Cosmetic Product 21",
-    "category": "Shampoo",
-    "stock": 101,
-    "expiry": "2027-06-22",
-    "price": 11.4,
-    "type": "cosmetic"
+    "brand": "Panadol",
+    "formula": "Paracetamol",
+    "category": "Painkiller",
+    "manufacturer": "GSK",
+    "expiryDate": "2027-01-15T00:00:00.000Z",
+    "stock": 200,
+    "unit": "per strip",
+    "price": 50,
+    "purchasePrice": 30,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
   },
   {
-    "name": "Cosmetic Product 22",
-    "category": "Conditioner",
-    "stock": 102,
-    "expiry": "2027-06-23",
-    "price": 11.8,
-    "type": "cosmetic"
+    "brand": "Lip Care",
+    "formula": "Unknown",
+    "category": "Cosmetic",
+    "manufacturer": "Nivea",
+    "expiryDate": "2027-09-12T00:00:00.000Z",
+    "stock": 150,
+    "unit": "per unit",
+    "price": 250,
+    "purchasePrice": 180,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
   },
   {
-    "name": "Cosmetic Product 23",
-    "category": "Lipstick",
-    "stock": 103,
-    "expiry": "2027-06-24",
-    "price": 12.2,
-    "type": "cosmetic"
+    "brand": "Cetaphil Lotion",
+    "formula": "Unknown",
+    "category": "Cosmetic",
+    "manufacturer": "Galderma",
+    "expiryDate": "2028-03-10T00:00:00.000Z",
+    "stock": 80,
+    "unit": "per pack",
+    "price": 1800,
+    "purchasePrice": 1400,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
   },
   {
-    "name": "Cosmetic Product 24",
-    "category": "Nail Polish",
-    "stock": 104,
-    "expiry": "2027-06-25",
-    "price": 12.6,
-    "type": "cosmetic"
+    "brand": "Augmentin",
+    "formula": "Amoxicillin + Clavulanic Acid",
+    "category": "Antibiotic",
+    "manufacturer": "GSK",
+    "expiryDate": "2026-12-01T00:00:00.000Z",
+    "stock": 90,
+    "unit": "per strip",
+    "price": 700,
+    "purchasePrice": 500,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
   },
   {
-    "name": "Cosmetic Product 25",
-    "category": "Perfume",
-    "stock": 105,
-    "expiry": "2027-06-26",
-    "price": 13.0,
-    "type": "cosmetic"
+    "brand": "Selsun Blue",
+    "formula": "Selenium Sulfide",
+    "category": "Cosmetic",
+    "manufacturer": "Sanofi",
+    "expiryDate": "2028-08-20T00:00:00.000Z",
+    "stock": 50,
+    "unit": "per pack",
+    "price": 900,
+    "purchasePrice": 650,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
   },
   {
-    "name": "Cosmetic Product 26",
-    "category": "Body Lotion",
-    "stock": 106,
-    "expiry": "2027-06-27",
-    "price": 13.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 27",
-    "category": "Sunscreen",
-    "stock": 107,
-    "expiry": "2027-06-28",
-    "price": 13.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 28",
-    "category": "Moisturizer",
-    "stock": 108,
-    "expiry": "2027-06-01",
-    "price": 14.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 29",
-    "category": "Hair Oil",
-    "stock": 109,
-    "expiry": "2027-06-02",
-    "price": 14.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 30",
-    "category": "Face Wash",
-    "stock": 110,
-    "expiry": "2027-06-03",
-    "price": 15.0,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 31",
-    "category": "Shampoo",
-    "stock": 111,
-    "expiry": "2027-06-04",
-    "price": 15.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 32",
-    "category": "Conditioner",
-    "stock": 112,
-    "expiry": "2027-06-05",
-    "price": 15.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 33",
-    "category": "Lipstick",
-    "stock": 113,
-    "expiry": "2027-06-06",
-    "price": 16.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 34",
-    "category": "Nail Polish",
-    "stock": 114,
-    "expiry": "2027-06-07",
-    "price": 16.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 35",
-    "category": "Perfume",
-    "stock": 115,
-    "expiry": "2027-06-08",
-    "price": 17.0,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 36",
-    "category": "Body Lotion",
-    "stock": 116,
-    "expiry": "2027-06-09",
-    "price": 17.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 37",
-    "category": "Sunscreen",
-    "stock": 117,
-    "expiry": "2027-06-10",
-    "price": 17.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 38",
-    "category": "Moisturizer",
-    "stock": 118,
-    "expiry": "2027-06-11",
-    "price": 18.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 39",
-    "category": "Hair Oil",
-    "stock": 119,
-    "expiry": "2027-06-12",
-    "price": 18.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 40",
-    "category": "Face Wash",
-    "stock": 120,
-    "expiry": "2027-06-13",
-    "price": 19.0,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 41",
-    "category": "Shampoo",
-    "stock": 121,
-    "expiry": "2027-06-14",
-    "price": 19.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 42",
-    "category": "Conditioner",
-    "stock": 122,
-    "expiry": "2027-06-15",
-    "price": 19.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 43",
-    "category": "Lipstick",
-    "stock": 123,
-    "expiry": "2027-06-16",
-    "price": 20.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 44",
-    "category": "Nail Polish",
-    "stock": 124,
-    "expiry": "2027-06-17",
-    "price": 20.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 45",
-    "category": "Perfume",
-    "stock": 125,
-    "expiry": "2027-06-18",
-    "price": 21.0,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 46",
-    "category": "Body Lotion",
-    "stock": 126,
-    "expiry": "2027-06-19",
-    "price": 21.4,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 47",
-    "category": "Sunscreen",
-    "stock": 127,
-    "expiry": "2027-06-20",
-    "price": 21.8,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 48",
-    "category": "Moisturizer",
-    "stock": 128,
-    "expiry": "2027-06-21",
-    "price": 22.2,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 49",
-    "category": "Hair Oil",
-    "stock": 129,
-    "expiry": "2027-06-22",
-    "price": 22.6,
-    "type": "cosmetic"
-  },
-  {
-    "name": "Cosmetic Product 50",
-    "category": "Face Wash",
+    "brand": "Zyrtec",
+    "formula": "Cetirizine",
+    "category": "Allergy",
+    "manufacturer": "UCB Pharma",
+    "expiryDate": "2027-05-05T00:00:00.000Z",
     "stock": 130,
-    "expiry": "2027-06-23",
-    "price": 23.0,
-    "type": "cosmetic"
+    "unit": "per strip",
+    "price": 150,
+    "purchasePrice": 110,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Fair & Lovely",
+    "formula": "Unknown",
+    "category": "Cosmetic",
+    "manufacturer": "Unilever",
+    "expiryDate": "2027-12-12T00:00:00.000Z",
+    "stock": 120,
+    "unit": "per pack",
+    "price": 350,
+    "purchasePrice": 250,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Brufen",
+    "formula": "Ibuprofen",
+    "category": "Painkiller",
+    "manufacturer": "Abbott",
+    "expiryDate": "2026-10-20T00:00:00.000Z",
+    "stock": 170,
+    "unit": "per strip",
+    "price": 90,
+    "purchasePrice": 60,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Sunblock SPF50",
+    "formula": "Zinc Oxide",
+    "category": "Cosmetic",
+    "manufacturer": "Neutrogena",
+    "expiryDate": "2028-01-01T00:00:00.000Z",
+    "stock": 60,
+    "unit": "per pack",
+    "price": 1500,
+    "purchasePrice": 1100,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Aspirin",
+    "formula": "Acetylsalicylic Acid",
+    "category": "Painkiller",
+    "manufacturer": "Bayer",
+    "expiryDate": "2027-03-15T00:00:00.000Z",
+    "stock": 140,
+    "unit": "per strip",
+    "price": 60,
+    "purchasePrice": 40,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Moisturizing Cream",
+    "formula": "Unknown",
+    "category": "Cosmetic",
+    "manufacturer": "Pond's",
+    "expiryDate": "2028-04-20T00:00:00.000Z",
+    "stock": 110,
+    "unit": "per pack",
+    "price": 500,
+    "purchasePrice": 380,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Azomax",
+    "formula": "Azithromycin",
+    "category": "Antibiotic",
+    "manufacturer": "Searle",
+    "expiryDate": "2026-11-11T00:00:00.000Z",
+    "stock": 85,
+    "unit": "per strip",
+    "price": 600,
+    "purchasePrice": 450,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Hand Sanitizer",
+    "formula": "Alcohol 70%",
+    "category": "Cosmetic",
+    "manufacturer": "Dettol",
+    "expiryDate": "2027-07-07T00:00:00.000Z",
+    "stock": 300,
+    "unit": "per pack",
+    "price": 150,
+    "purchasePrice": 100,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Claritek",
+    "formula": "Clarithromycin",
+    "category": "Antibiotic",
+    "manufacturer": "Hilton Pharma",
+    "expiryDate": "2027-08-08T00:00:00.000Z",
+    "stock": 75,
+    "unit": "per strip",
+    "price": 800,
+    "purchasePrice": 600,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Face Wash",
+    "formula": "Salicylic Acid",
+    "category": "Cosmetic",
+    "manufacturer": "Garnier",
+    "expiryDate": "2027-06-06T00:00:00.000Z",
+    "stock": 95,
+    "unit": "per pack",
+    "price": 700,
+    "purchasePrice": 500,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "Ciproxin",
+    "formula": "Ciprofloxacin",
+    "category": "Antibiotic",
+    "manufacturer": "Bayer",
+    "expiryDate": "2027-09-09T00:00:00.000Z",
+    "stock": 65,
+    "unit": "per strip",
+    "price": 450,
+    "purchasePrice": 320,
+    "type": "medicine",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
+  },
+  {
+    "brand": "BB Cream",
+    "formula": "Unknown",
+    "category": "Cosmetic",
+    "manufacturer": "Maybelline",
+    "expiryDate": "2028-02-02T00:00:00.000Z",
+    "stock": 55,
+    "unit": "per pack",
+    "price": 1200,
+    "purchasePrice": 900,
+    "type": "cosmetic",
+    "createdAt": "2025-04-28T19:38:47.728Z",
+    "updatedAt": "2025-04-28T19:38:47.728Z",
+    "__v": 0
   }
 ]
