@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const ProductModel = require('../models/productModel');
-
-router.get('/api/medicines/search', async (req, res) => {
+const isAuthenticated = require('../middlewares/auth');
+router.get('/api/medicines/search', isAuthenticated ,async (req, res) => {
     try {
         const query = req.query.query || '';
         const regex = new RegExp(query, 'i');

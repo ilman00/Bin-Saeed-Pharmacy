@@ -1,9 +1,9 @@
 const express = require('express');
 const SoldItems = require('../models/SoldItems');
-
+const isAuthenticated = require('../middlewares/auth');
 const route = express.Router()
 
-route.get('/loss', async (req, res) => {
+route.get('/loss', isAuthenticated ,async (req, res) => {
   try {
     const lossItems = await SoldItems.find({
       $expr: {

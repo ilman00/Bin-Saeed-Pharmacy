@@ -1,10 +1,10 @@
 const express = require('express'); 
-
+const isAuthenticated = require('../middlewares/auth')
 const route = express.Router();
 
 const SaleTransaction = require('../models/SaleTransaction'); // adjust path
 
-route.get('/history', async (req, res) => {
+route.get('/history', isAuthenticated ,async (req, res) => {
   try {
     const transactions = await SaleTransaction.find()
       .populate('items') // populate item details

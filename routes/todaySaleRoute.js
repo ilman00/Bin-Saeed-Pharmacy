@@ -2,8 +2,8 @@
 const express = require('express');
 const route = express.Router();
 const SoldItems = require('../models/SoldItems'); // your model
-
-route.get('/today-sales', async (req, res) => {
+const isAuthenticated = require('../middlewares/auth')
+route.get('/today-sales', isAuthenticated ,async (req, res) => {
     const startOfDay = new Date();
     startOfDay.setHours(0,0,0,0);
 

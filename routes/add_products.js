@@ -1,16 +1,17 @@
 const express = require('express');
 
 const ProductModel = require('../models/productModel');
+const isAuthenticated = require('../middlewares/auth')
 
 const route = express.Router()
 
-route.get('/add-product', (req, res) => {
+route.get('/add-product', isAuthenticated,(req, res) => {
     res.render('add_products')
 })
 
 
 // POST route to add new medicine
-route.post('/add-product', async (req, res) => {
+route.post('/add-product', isAuthenticated,async (req, res) => {
     try {
         const {
             brand,

@@ -11,7 +11,7 @@ route.get('/sale-page', isAuthenticated, (req, res) => {
   res.render('sale')
 })
 
-route.get('/api/sale', async (req, res) => {
+route.get('/api/sale', isAuthenticated,async (req, res) => {
   try {
     const { query, type } = req.query;
 
@@ -38,7 +38,7 @@ route.get('/api/sale', async (req, res) => {
 
 
 
-route.post('/api/sale/update', async (req, res) => {
+route.post('/api/sale/update',isAuthenticated, async (req, res) => {
   try {
     const { items } = req.body;
     const user = req.user; // Assuming user is attached by auth middleware
@@ -48,7 +48,7 @@ route.post('/api/sale/update', async (req, res) => {
     let totalAmount = 0;
     let totalProfit = 0;
 
-    console.log(items);
+    // console.log(items);
 
     for (const item of items) {
       const med = await ProductModel.findOne({ brand: item.brand });
@@ -112,15 +112,6 @@ route.post('/api/sale/update', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-
-
-
-
-
-
-
-
-
 
 
 

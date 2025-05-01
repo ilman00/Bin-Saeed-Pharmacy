@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const SoldItems = require('../models/SoldItems');
+const isAuthenticated = require('../middlewares/auth');
 
-router.get('/profit/medicine', async (req, res) => {
+router.get('/profit/medicine', isAuthenticated, async (req, res) => {
     try {
         const allItems = await SoldItems.find();
 

@@ -1,9 +1,10 @@
 const express = require('express')
 const ProductModel = require('../models/productModel');
+const isAuthenticated = require('../middlewares/auth')
 
 const route = express.Router()
 
-route.get('/edit/:id', async (req, res) => {
+route.get('/edit/:id', isAuthenticated , async (req, res) => {
     try{
         const id = req.params.id;
         const product = await ProductModel.findById(id);
@@ -14,7 +15,7 @@ route.get('/edit/:id', async (req, res) => {
     }
 });
 
-route.post('/edit', async (req, res) => {
+route.post('/edit', isAuthenticated, async (req, res) => {
     const { id, name, stock, expiry, price, category, type } = req.body;
   
     try {

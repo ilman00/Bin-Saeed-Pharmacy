@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const User = require('../models/User');
-
+const isAuthenticated = require('../middlewares/auth')
 // Registration Route (Only Admin should use this)
-router.get('/register', (req, res) => {
+router.get('/register', isAuthenticated ,(req, res) => {
   res.render('register');
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', isAuthenticated ,async (req, res) => {
   const { username, password, role } = req.body;
   try {
     const user = new User({ username, role });
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login Routes
-router.get('/login', (req, res) => {
+router.get('/login',(req, res) => {
   res.render('login');
 });
 

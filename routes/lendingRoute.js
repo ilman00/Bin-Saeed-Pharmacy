@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const Lending = require('../models/LendingProduct');
-
+const isAuthenticated = require('../middlewares/auth');
 // routes/lending.js
 
-router.get('/lending', async (req, res) => {
+router.get('/lending', isAuthenticated ,async (req, res) => {
   try {
     const lendingData = await Lending.find().sort({ createdAt: -1 });
     console.log(lendingData);
@@ -16,12 +16,23 @@ router.get('/lending', async (req, res) => {
   }
 });
 
+router.post('/delete-lending/:id', async (req, res)=>{
+  try {
+    const { id } = req.params;
+    await Lending.findByIdAndDelete(id);
+    res.redirect('/lending?success=true');
+  } catch (error) {
+    // console.error('Error deleting lending:', error);
+    // res.status(500).send('Server Error');
+    res.redirect('/lending?success=false');
+
+  }
+})
 
 
 
 
-
-router.post('/api/lend', async (req, res) => {
+router.post('/api/lend', isAuthenticated ,async (req, res) => {
   try {
     const { customerName, phone, items, totalAmount } = req.body;
 

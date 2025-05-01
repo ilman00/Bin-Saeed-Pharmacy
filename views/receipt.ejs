@@ -37,6 +37,11 @@
     font-size: 14px;
   }
 
+  .developer-detail{
+    text-align: center;
+    margin-top: 5px;
+  }
+
   @media print {
     .no-print {
       display: none;
@@ -45,9 +50,9 @@
 </style>
 
 <body>
-  <h2>🏥 Medical Store</h2>
-  <h4>Address: Your Address Here</h4>
-  <h4>Tel: 123456789</h4>
+  <h2><strong>Bin Saeed Pharmacy</strong></h2>
+  <h6>Address: Your Address Here</h6>
+  <h6>Tel: 123456789</h6>
 
   <div class="line">******************************</div>
   <h3 style="text-align:center;">CASH RECEIPT</h3>
@@ -56,19 +61,21 @@
   <div>
     <div>Date: <%= new Date(sale.createdAt).toLocaleString() %></div>
     <div>Sale ID: <%= sale._id %></div>
-    <div>Salesperson: <%= sale.salespersonName %></div>
+    <div>Salesperson: <%= sale.username %></div>
   </div>
 
   <div class="line">------------------------------</div>
 
   <div class="item-row" style="font-weight:bold;">
     <span>Description</span>
+    <span>Disc</span>
     <span>Price</span>
   </div>
 
   <% sale.items.forEach(item => { %>
     <div class="item-row">
       <span><%= item.brand %> * <%= item.quantity%></span>
+      <span><%= item.discount %></span>
       <span>Rs.<%= item.total.toFixed(2) %></span>
     </div>
   <% }); %>
@@ -83,6 +90,7 @@
   <div class="line">******************************</div>
 
   <div class="thank-you">THANK YOU!</div>
+  <div class="developer-detail">Application Developed By Ilman <br> Ph: 03499038984 </div>
 
   <div class="text-center no-print" style="margin-top: 20px;">
     <button class="btn btn-primary mb-2" onclick="window.print()">🖨️ Print Receipt</button>
