@@ -1,0 +1,74 @@
+
+<%- include('partials/header') %>
+</head>
+
+<body>
+
+  <%- include('partials/navbar') %>
+  <div class="container mt-5">
+    <h2 class="mb-4">Lending Products</h2>
+
+    <% if (lendingData.length===0) { %>
+      <div class="alert alert-info">No lending products found.</div>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Total Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% lendingData.forEach((lend, index)=> { %>
+                <tr>
+                  <td>
+                    <%= index + 1 %>
+                  </td>
+                  <td>
+                    <%= lend.customerName || 'N/A' %>
+                  </td>
+                  <td>
+                    <%= lend.customerPhone || 'N/A' %>
+                  </td>
+                  <td>
+                    <%= lend.createdAt.toLocaleDateString() %>
+                  </td>
+                  <td>
+                    <ul class="mb-0 navbar-nav">
+                      <% lend.items.forEach(item=> { %>
+                        <li class="nav-item">
+                          <strong>
+                            <%= item.brand %>
+                          </strong>
+                          — <%= item.quantity %> × Rs. <%= item.price %>
+                              (<%= item.unit %>)
+                        </li>
+                        <% }) %>
+                    </ul>
+                  </td>
+                  <td>Rs. <%= lend.totalAmount %>
+                  </td>
+                  <td class="action-buttons">
+                    <a href="/edit/" class="btn btn-sm btn-outline-secondary">To Reciept</a>
+                    <form action="/delete/" method="POST" onsubmit="return confirm('Are you sure?')"
+                      style="display: inline-block;">
+                      <button type="submit" class="btn btn-danger">Returned</button>
+                    </form>
+                    
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+  </div>
+</body>
+
+</html>

@@ -1,21 +1,21 @@
 <%- include('partials/header') %>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-    <style>
-        .profit-card {
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease;
-        }
+  <style>
+    .profit-card {
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+    }
 
-        .profit-card:hover {
-            transform: translateY(-3px);
-        }
-    </style>
-</head>
+    .profit-card:hover {
+      transform: translateY(-3px);
+    }
+  </style>
+  </head>
 
-<body class="bg-light p-4">
-    <div class="container">
+  <body class="bg-light">
+    <%- include('partials/navbar') %>
+
+      <div class="container">
         <h2 class="mb-4">Profit</h2>
 
         <!-- <header>
@@ -55,64 +55,78 @@
             </div>
           </nav>
         </header> -->
-        <%- include('partials/navbar') %>
         <!-- Overview Cards -->
         <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="bg-white p-4 text-center profit-card">
-                    <h5 class="text-muted">Today's Profit</h5>
-                    <h3 class="text-success" id="todayProfit">Rs <%= todayProfit %></h3>
-                </div>
+          <div class="col-md-4">
+            <div class="bg-white p-4 text-center profit-card">
+              <h5 class="text-muted">Today's Profit</h5>
+              <h3 class="text-success" id="todayProfit">Rs <%= todayProfit %>
+              </h3>
             </div>
-            <div class="col-md-4">
-                <div class="bg-white p-4 text-center profit-card">
-                    <h5 class="text-muted">This Month's Profit</h5>
-                    <h3 class="text-primary" id="monthProfit">Rs <%= thisMonthProfit %></h3>
-                </div>
+          </div>
+          <div class="col-md-4">
+            <div class="bg-white p-4 text-center profit-card">
+              <h5 class="text-muted">This Month's Profit</h5>
+              <h3 class="text-primary" id="monthProfit">Rs <%= thisMonthProfit %>
+              </h3>
             </div>
-            <div class="col-md-4">
-                <div class="bg-white p-4 text-center profit-card">
-                    <h5 class="text-muted">Total Profit</h5>
-                    <h3 class="text-dark" id="totalProfit">Rs <%= totalProfit %></h3>
-                </div>
+          </div>
+          <div class="col-md-4">
+            <div class="bg-white p-4 text-center profit-card">
+              <h5 class="text-muted">Total Profit</h5>
+              <h3 class="text-dark" id="totalProfit">Rs <%= totalProfit %>
+              </h3>
             </div>
+          </div>
         </div>
 
         <!-- Per Medicine Profit Table -->
         <div class="card shadow-sm">
-            <div class="card-header bg-white fw-bold">Profit per Medicine</div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-striped mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Brand</th>
-                                <th>Formula</th>
-                                <th>Purchase Price</th>
-                                <th>Sale Price</th>
-                                <th>Quantity Sold</th>
-                                <th>Profit</th>
-                            </tr>
-                        </thead>
-                        <tbody id="profitTable">
-                            <% items.forEach(item => { %>
-                              <tr>
-                                <td><%= item.brand %></td>
-                                <td><%= item.formula %></td>
-                                <td>Rs <%= item.purchasePrice %></td>
-                                <td>Rs <%= item.salePrice %></td>
-                                <td><%= item.quantitySold %></td>
-                                <td>Rs <%= item.profit %></td>
-                              </tr>
-                            <% }); %>
-                          </tbody>
-                    </table>
-                </div>
+          <div class="card-header bg-white fw-bold">Profit per Medicine</div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Brand</th>
+                    <th>Formula</th>
+                    <th>Purchase Price</th>
+                    <th>Sale Price</th>
+                    <th>Quantity Sold</th>
+                    <th>Profit</th>
+                  </tr>
+                </thead>
+                <tbody id="profitTable">
+                  <% items.forEach(item=> { %>
+                    <tr>
+                      <td>
+                        <%= item.brand %>
+                      </td>
+                      <td>
+                        <%= item.formula %>
+                      </td>
+                      <td>Rs <%= item.purchasePrice %>
+                      </td>
+                      <td>Rs <%= item.salePrice %>
+                      </td>
+                      <td>
+                        <%= item.quantitySold %>
+                      </td>
+                      <td>Rs <%= item.profit %>
+                      </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-       
-</body>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
 
-</html>
+  </body>
+
+  </html>

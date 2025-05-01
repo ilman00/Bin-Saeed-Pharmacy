@@ -68,7 +68,7 @@
 
   <% sale.items.forEach(item => { %>
     <div class="item-row">
-      <span><%= item.brand %></span>
+      <span><%= item.brand %> * <%= item.quantity%></span>
       <span>Rs.<%= item.total.toFixed(2) %></span>
     </div>
   <% }); %>

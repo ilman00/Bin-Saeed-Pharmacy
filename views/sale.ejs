@@ -68,12 +68,13 @@
   </style>
   </head>
 
-  <body class="p-4">
+  <body class="">
+    <%- include('partials/navbar') %>
+
     <div class="container">
-      <h2 class="mb-4">Medical Order Dashboard</h2>
+      <h2 class="mb-4">Place Order</h2>
       <!-- Navbar -->
       <!-- Responsive Navbar -->
-      <%- include('partials/navbar') %>
 
         <div class="table-responsive">
           <div class="mb-3">
@@ -152,8 +153,8 @@
 
     <script>
 
-      const baseUrl = 'https://bin-saeed-pharmacy.onrender.com'
-      // const baseUrl = 'http://localhost:5000'
+      // const baseUrl = 'https://bin-saeed-pharmacy.onrender.com'
+      const baseUrl = 'http://localhost:5000'
 
 
       const tableBody = document.getElementById("tableBody");
@@ -331,7 +332,7 @@
           if (!brandInput.value.trim() || !medicine) return;
 
           const quantity = parseInt(row.querySelector('[data-type="quantity"]').value);
-          const stock = parseInt(row.children[5].textContent);
+          const stock = parseInt(row.children[6].textContent);
 
           if (quantity > stock) {
             alert(`Not enough stock for ${medicine.brand}. Requested: ${quantity}, Available: ${stock}`);
@@ -429,6 +430,7 @@
         }
 
         tableBody.querySelectorAll("tr").forEach(row => {
+          console.log(row);
           const brandInput = row.querySelector('[data-type="brand"]');
           const medicine = brandInput.selectedMedicine;
           if (!brandInput.value.trim() || !medicine) return;
@@ -441,6 +443,7 @@
             hasInvalid = true;
             return;
           }
+          
 
           data.push({
             brand: medicine.brand,
@@ -448,7 +451,8 @@
             price: parseFloat(row.children[2].textContent),
             discount: row.querySelector('[data-type="discount"]').value.trim(),
             quantity,
-            total: parseFloat(row.children[8].textContent)
+            unit: row.children[4].textContent.trim().toLowerCase(),
+            total: parseFloat(row.children[8].textContent),
           });
         });
 
@@ -469,7 +473,7 @@
           .then(res => res.json())
           .then(result => {
             if (result.success && result.lendId) {
-              window.location.href = `/lend/receipt?lendId=${result.lendId}`;
+              window.location.href = `/lending`;
             } else {
               alert("Failed to save lend order.");
             }
