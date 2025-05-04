@@ -71,10 +71,10 @@
   <body class="">
     <%- include('partials/navbar') %>
 
-    <div class="container">
-      <h2 class="mb-4">Place Order</h2>
-      <!-- Navbar -->
-      <!-- Responsive Navbar -->
+      <div class="container">
+        <h2 class="mb-4">Place Order</h2>
+        <!-- Navbar -->
+        <!-- Responsive Navbar -->
 
         <div class="table-responsive">
           <div class="mb-3">
@@ -118,31 +118,31 @@
 
           <button id="resetBtn" class="btn btn-secondary">Reset</button>
         </div>
-    </div>
+      </div>
 
 
 
 
 
-    <!-- Lend Modal -->
-    <div class="modal fade" id="lendModal" tabindex="-1" aria-labelledby="lendModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="lendModalLabel">Lend Order</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <input type="text" class="form-control mb-2" id="customerName" placeholder="Customer Name" required />
-            <input type="text" class="form-control" id="customerPhone" placeholder="Phone (optional)" />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-warning" id="confirmLendBtn">Confirm Lend</button>
+      <!-- Lend Modal -->
+      <div class="modal fade" id="lendModal" tabindex="-1" aria-labelledby="lendModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="lendModalLabel">Lend Order</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" class="form-control mb-2" id="customerName" placeholder="Customer Name" required />
+              <input type="text" class="form-control" id="customerPhone" placeholder="Phone (optional)" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-warning" id="confirmLendBtn">Confirm Lend</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
 
 
@@ -151,17 +151,17 @@
 
 
 
-    <script>
+      <script>
 
-      const baseUrl = 'https://bin-saeed-pharmacy.onrender.com'
-      // const baseUrl = 'http://localhost:5000'
+        const baseUrl = 'https://bin-saeed-pharmacy.onrender.com'
+        // const baseUrl = 'http://localhost:5000'
 
 
-      const tableBody = document.getElementById("tableBody");
+        const tableBody = document.getElementById("tableBody");
 
-      function createRow() {
-        const row = document.createElement("tr");
-        row.innerHTML = `
+        function createRow() {
+          const row = document.createElement("tr");
+          row.innerHTML = `
   <td><div class="position-relative"><input class="form-control" data-type="brand" autocomplete="off" /></div></td>
   <td></td>  <!-- Formula -->
   <td></td>  <!-- Price (original, read-only) -->
@@ -174,334 +174,337 @@
   <td><button class="btn btn-danger btn-sm delete-btn">✖</button></td>
 `;
 
-        tableBody.appendChild(row);
+          tableBody.appendChild(row);
 
-        row.querySelector(".delete-btn").addEventListener("click", () => {
-          const totalRows = tableBody.querySelectorAll("tr").length;
+          row.querySelector(".delete-btn").addEventListener("click", () => {
+            const totalRows = tableBody.querySelectorAll("tr").length;
 
-          if (totalRows > 1) {
-            row.remove();
-            updateGrandTotal();
-          } else {
-            alert("At least one row is required.");
-          }
-        });
-
-        const inputs = row.querySelectorAll("input");
-        inputs.forEach((input) => {
-          if (input.dataset.type === "brand") {
-            input.addEventListener("input", () => showSuggestions(input, row));
-          }
-
-          input.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              if (input.dataset.type === "brand" && input.selectedMedicine) {
-                fillMedicineDetails(row, input.selectedMedicine);
-              }
-              moveToNextInput(input, row);
+            if (totalRows > 1) {
+              row.remove();
+              updateGrandTotal();
+            } else {
+              alert("At least one row is required.");
             }
           });
 
-          input.addEventListener("input", () => calculateRowTotal(row));
-        });
-
-        row.querySelector('[data-type="brand"]').focus();
-      }
-
-
-      function showSuggestions(input, row) {
-        const value = input.value.trim();
-        if (!value) return;
-
-        const productType = document.getElementById('productType').value; // 👈 get selected type
-
-        fetch(`${baseUrl}/api/sale?query=${encodeURIComponent(value)}&type=${productType}`) // 👈 pass type
-          .then(res => res.json())
-          .then(matches => {
-            let suggestionBox = input.nextElementSibling;
-            if (!suggestionBox || !suggestionBox.classList.contains("autocomplete-suggestions")) {
-              suggestionBox = document.createElement("div");
-              suggestionBox.className = "autocomplete-suggestions";
-              input.parentNode.appendChild(suggestionBox);
+          const inputs = row.querySelectorAll("input");
+          inputs.forEach((input) => {
+            if (input.dataset.type === "brand") {
+              input.addEventListener("input", () => showSuggestions(input, row));
             }
 
-            suggestionBox.innerHTML = matches.map(med => `<div>${med.brand}</div>`).join("");
-            suggestionBox.style.display = matches.length ? "block" : "none";
-
-            suggestionBox.querySelectorAll("div").forEach((div, index) => {
-              div.addEventListener("click", () => {
-                const selectedMed = matches[index];
-                input.value = selectedMed.brand;
-                input.selectedMedicine = selectedMed;
-                fillMedicineDetails(row, selectedMed);
-                suggestionBox.style.display = "none";
-              });
+            input.addEventListener("keydown", (e) => {
+              if (e.key === "Enter") {
+                if (input.dataset.type === "brand" && input.selectedMedicine) {
+                  fillMedicineDetails(row, input.selectedMedicine);
+                }
+                moveToNextInput(input, row);
+              }
             });
 
-            input.onkeydown = function (e) {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                if (matches.length > 0) {
-                  const selectedMed = matches[0];
+            input.addEventListener("input", () => calculateRowTotal(row));
+          });
+
+          row.querySelector('[data-type="brand"]').focus();
+        }
+
+
+        function showSuggestions(input, row) {
+          const value = input.value.trim();
+          if (!value) return;
+
+          const productType = document.getElementById('productType').value; // 👈 get selected type
+
+          fetch(`${baseUrl}/api/sale?query=${encodeURIComponent(value)}&type=${productType}`) // 👈 pass type
+            .then(res => res.json())
+            .then(matches => {
+              let suggestionBox = input.nextElementSibling;
+              if (!suggestionBox || !suggestionBox.classList.contains("autocomplete-suggestions")) {
+                suggestionBox = document.createElement("div");
+                suggestionBox.className = "autocomplete-suggestions";
+                input.parentNode.appendChild(suggestionBox);
+              }
+
+              suggestionBox.innerHTML = matches.map(med => `<div>${med.brand}</div>`).join("");
+              suggestionBox.style.display = matches.length ? "block" : "none";
+
+              suggestionBox.querySelectorAll("div").forEach((div, index) => {
+                div.addEventListener("click", () => {
+                  const selectedMed = matches[index];
                   input.value = selectedMed.brand;
                   input.selectedMedicine = selectedMed;
                   fillMedicineDetails(row, selectedMed);
                   suggestionBox.style.display = "none";
-                  moveToNextInput(input, row);
+                });
+              });
+
+              input.onkeydown = function (e) {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (matches.length > 0) {
+                    const selectedMed = matches[0];
+                    input.value = selectedMed.brand;
+                    input.selectedMedicine = selectedMed;
+                    fillMedicineDetails(row, selectedMed);
+                    suggestionBox.style.display = "none";
+                    moveToNextInput(input, row);
+                  }
                 }
-              }
-            };
+              };
 
-          })
-          .catch(error => {
-            console.error("Error fetching product data:", error);
-          });
-      }
-
-
-
-      function fillMedicineDetails(row, medicine) {
-        if (medicine) {
-          row.children[1].textContent = medicine.formula;
-          row.children[2].textContent = medicine.price.toFixed(2);
-          row.querySelector('[data-type="price"]').value = medicine.price;
-          row.children[4].textContent = medicine.unit || '';
-          row.children[6].textContent = medicine.stock; // ✅ Correct index for stock
-          calculateRowTotal(row);
+            })
+            .catch(error => {
+              console.error("Error fetching product data:", error);
+            });
         }
-      }
 
-      function moveToNextInput(currentInput, row) {
-        const inputs = row.querySelectorAll("input");
-        const index = Array.from(inputs).indexOf(currentInput);
-        if (index < inputs.length - 1) {
-          inputs[index + 1].focus();
-        } else {
+
+
+        function fillMedicineDetails(row, medicine) {
+          if (medicine) {
+            row.children[1].textContent = medicine.formula;
+            row.children[2].textContent = medicine.price.toFixed(2);
+            row.querySelector('[data-type="price"]').value = medicine.price;
+            row.children[4].textContent = medicine.unit || '';
+            row.children[6].textContent = medicine.stock;
+            row.dataset.medId = medicine._id; // ✅ Set ID on row
+            console.log("Medicine ID:", medicine._id);
+            calculateRowTotal(row);
+          }
+        }
+
+
+        function moveToNextInput(currentInput, row) {
+          const inputs = row.querySelectorAll("input");
+          const index = Array.from(inputs).indexOf(currentInput);
+          if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          } else {
+            createRow();
+          }
+        }
+
+        function calculateRowTotal(row) {
+          const priceInput = row.querySelector('[data-type="price"]');
+          const discountInputEl = row.querySelector('[data-type="discount"]');
+          const quantityInput = row.querySelector('[data-type="quantity"]');
+
+          if (!priceInput || !discountInputEl || !quantityInput) return;
+
+          const price = parseFloat(priceInput.value) || 0;
+          const discountInput = discountInputEl.value.trim().toLowerCase();
+          const quantity = parseInt(quantityInput.value) || 1;
+
+          let discount = 0;
+          if (discountInput.endsWith("%")) {
+            const percent = parseFloat(discountInput);
+            if (!isNaN(percent)) discount = price * (percent / 100);
+          } else {
+            const flat = parseFloat(discountInput);
+            if (!isNaN(flat)) discount = flat;
+          }
+
+          const finalPrice = Math.max(price - discount, 0);
+          const total = Math.round(finalPrice * quantity); // 👈 Round to nearest integer
+          row.children[8].textContent = total.toFixed(0); // 👈 Show integer only
+          updateGrandTotal();
+        }
+
+        function updateGrandTotal() {
+          let total = 0;
+          tableBody.querySelectorAll("tr").forEach(row => {
+            total += parseFloat(row.children[8].textContent) || 0;
+          });
+          document.getElementById("grandTotal").textContent = total.toFixed(2);
+        }
+
+        function submitOrder() {
+          const data = [];
+          let hasInvalid = false;
+
+          const btn = document.getElementById("submitOrderBtn");
+          const spinner = document.getElementById("submitSpinner");
+          btn.disabled = true;
+          spinner.classList.remove("d-none");
+
+          tableBody.querySelectorAll("tr").forEach(row => {
+            console.log(row);
+            const brandInput = row.querySelector('[data-type="brand"]');
+            const medicine = brandInput.selectedMedicine;
+            console.log(medicine);
+            if (!brandInput.value.trim() || !medicine) return;
+
+            const quantity = parseInt(row.querySelector('[data-type="quantity"]').value);
+            const stock = parseInt(row.children[6].textContent);
+
+            if (quantity > stock) {
+              alert(`Not enough stock for ${medicine.brand}. Requested: ${quantity}, Available: ${stock}`);
+              hasInvalid = true;
+              return;
+            }
+
+            data.push({
+              brand: medicine.brand,
+              formula: medicine.formula,
+              price: parseFloat(row.children[2].textContent),
+              discount: row.querySelector('[data-type="discount"]').value.trim(),
+              quantity,
+              stock,
+              total: parseFloat(row.children[7].textContent)
+            });
+          });
+
+          if (hasInvalid) {
+            btn.disabled = false;
+            spinner.classList.add("d-none");
+            return;
+          }
+
+          sendToBackend(data, () => {
+            btn.disabled = false;
+            spinner.classList.add("d-none");
+            resetTable();
+          });
+        }
+
+        function sendToBackend(data, callback) {
+          console.log(data);
+          fetch(`${baseUrl}/api/sale/update`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ items: data })
+          })
+            .then(res => res.json())
+            .then(result => {
+              console.log("Saved:", result);
+              if (result.success && result.saleId) {
+                window.location.href = `/reciept?saleId=${result.saleId}`;
+              } else {
+                alert("Failed to save order. Please try again.");
+              }
+            })
+            .catch(err => {
+              alert("Failed to submit order.");
+              console.error("Submit Error:", err);
+            })
+            .finally(callback);
+        }
+
+        function resetTable() {
+          tableBody.innerHTML = "";
+          document.getElementById("grandTotal").textContent = "0.00";
           createRow();
         }
-      }
 
-      function calculateRowTotal(row) {
-        const priceInput = row.querySelector('[data-type="price"]');
-        const discountInputEl = row.querySelector('[data-type="discount"]');
-        const quantityInput = row.querySelector('[data-type="quantity"]');
+        document.getElementById("lendBtn").addEventListener("click", () => {
+          let hasValidRow = false;
 
-        if (!priceInput || !discountInputEl || !quantityInput) return;
+          tableBody.querySelectorAll("tr").forEach(row => {
+            const brandInput = row.querySelector('[data-type="brand"]');
+            const medicine = brandInput?.selectedMedicine;
 
-        const price = parseFloat(priceInput.value) || 0;
-        const discountInput = discountInputEl.value.trim().toLowerCase();
-        const quantity = parseInt(quantityInput.value) || 1;
+            if (medicine && brandInput.value.trim()) {
+              hasValidRow = true;
+            }
+          });
 
-        let discount = 0;
-        if (discountInput.endsWith("%")) {
-          const percent = parseFloat(discountInput);
-          if (!isNaN(percent)) discount = price * (percent / 100);
-        } else {
-          const flat = parseFloat(discountInput);
-          if (!isNaN(flat)) discount = flat;
-        }
-
-        const finalPrice = Math.max(price - discount, 0);
-        const total = Math.round(finalPrice * quantity); // 👈 Round to nearest integer
-        row.children[8].textContent = total.toFixed(0); // 👈 Show integer only
-        updateGrandTotal();
-      }
-
-      function updateGrandTotal() {
-        let total = 0;
-        tableBody.querySelectorAll("tr").forEach(row => {
-          total += parseFloat(row.children[8].textContent) || 0;
-        });
-        document.getElementById("grandTotal").textContent = total.toFixed(2);
-      }
-
-      function submitOrder() {
-        const data = [];
-        let hasInvalid = false;
-
-        const btn = document.getElementById("submitOrderBtn");
-        const spinner = document.getElementById("submitSpinner");
-        btn.disabled = true;
-        spinner.classList.remove("d-none");
-
-        tableBody.querySelectorAll("tr").forEach(row => {
-          console.log(row);
-          const brandInput = row.querySelector('[data-type="brand"]');
-          const medicine = brandInput.selectedMedicine;
-          console.log(medicine);
-          if (!brandInput.value.trim() || !medicine) return;
-
-          const quantity = parseInt(row.querySelector('[data-type="quantity"]').value);
-          const stock = parseInt(row.children[6].textContent);
-
-          if (quantity > stock) {
-            alert(`Not enough stock for ${medicine.brand}. Requested: ${quantity}, Available: ${stock}`);
-            hasInvalid = true;
+          if (!hasValidRow) {
+            alert("Please enter at least one valid medicine before lending.");
             return;
           }
 
-          data.push({
-            brand: medicine.brand,
-            formula: medicine.formula,
-            price: parseFloat(row.children[2].textContent),
-            discount: row.querySelector('[data-type="discount"]').value.trim(),
-            quantity,
-            stock,
-            total: parseFloat(row.children[7].textContent)
-          });
+          // If valid, open the modal
+          const lendModal = new bootstrap.Modal(document.getElementById("lendModal"));
+          lendModal.show();
         });
 
-        if (hasInvalid) {
-          btn.disabled = false;
-          spinner.classList.add("d-none");
-          return;
+
+        document.getElementById("confirmLendBtn").addEventListener("click", submitLendOrder);
+
+        function submitLendOrder() {
+          const customerName = document.getElementById("customerName").value.trim();
+          const phone = document.getElementById("customerPhone").value.trim();
+          const data = [];
+          let hasInvalid = false;
+
+          if (!customerName) {
+            alert("Customer name is required.");
+            return;
+          }
+
+          tableBody.querySelectorAll("tr").forEach(row => {
+            console.log(row);
+            const brandInput = row.querySelector('[data-type="brand"]');
+            const medicine = brandInput.selectedMedicine;
+            if (!brandInput.value.trim() || !medicine) return;
+
+            const quantity = parseInt(row.querySelector('[data-type="quantity"]').value);
+            const stock = parseInt(row.children[6].textContent);
+
+            if (quantity > stock) {
+              alert(`Not enough stock for ${medicine.brand}. Requested: ${quantity}, Available: ${stock}`);
+              hasInvalid = true;
+              return;
+            }
+
+
+            data.push({
+              brand: medicine.brand,
+              formula: medicine.formula,
+              price: parseFloat(row.children[2].textContent),
+              discount: row.querySelector('[data-type="discount"]').value.trim(),
+              quantity,
+              unit: row.children[4].textContent.trim().toLowerCase(),
+              total: parseFloat(row.children[8].textContent),
+            });
+          });
+
+          if (hasInvalid || data.length === 0) return;
+
+          const grandTotal = parseFloat(document.getElementById("grandTotal").textContent);
+
+          fetch(`${baseUrl}/api/lend`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              customerName,
+              phone,
+              items: data,
+              totalAmount: grandTotal
+            })
+          })
+            .then(res => res.json())
+            .then(result => {
+              if (result.success && result.lendingId) {
+                window.location.href = `/lending`;
+              } else {
+                alert("Failed to save lend order.", result.message);
+              }
+            })
+            .catch(err => {
+              console.error("Lend Submit Error:", err);
+              alert("Error submitting lend order.");
+            });
         }
 
-        sendToBackend(data, () => {
-          btn.disabled = false;
-          spinner.classList.add("d-none");
-          resetTable();
-        });
-      }
 
-      function sendToBackend(data, callback) {
-        console.log(data);
-        fetch(`${baseUrl}/api/sale/update`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: data })
-        })
-          .then(res => res.json())
-          .then(result => {
-            console.log("Saved:", result);
-            if (result.success && result.saleId) {
-              window.location.href = `/reciept?saleId=${result.saleId}`;
-            } else {
-              alert("Failed to save order. Please try again.");
-            }
-          })
-          .catch(err => {
-            alert("Failed to submit order.");
-            console.error("Submit Error:", err);
-          })
-          .finally(callback);
-      }
 
-      function resetTable() {
-        tableBody.innerHTML = "";
-        document.getElementById("grandTotal").textContent = "0.00";
+
+
+
+
+        document.getElementById("submitOrderBtn").addEventListener("click", submitOrder);
+
+        document.getElementById("resetBtn").addEventListener("click", resetTable);
+
         createRow();
-      }
-
-      document.getElementById("lendBtn").addEventListener("click", () => {
-        let hasValidRow = false;
-
-        tableBody.querySelectorAll("tr").forEach(row => {
-          const brandInput = row.querySelector('[data-type="brand"]');
-          const medicine = brandInput?.selectedMedicine;
-
-          if (medicine && brandInput.value.trim()) {
-            hasValidRow = true;
-          }
-        });
-
-        if (!hasValidRow) {
-          alert("Please enter at least one valid medicine before lending.");
-          return;
-        }
-
-        // If valid, open the modal
-        const lendModal = new bootstrap.Modal(document.getElementById("lendModal"));
-        lendModal.show();
-      });
-
-
-      document.getElementById("confirmLendBtn").addEventListener("click", submitLendOrder);
-
-      function submitLendOrder() {
-        const customerName = document.getElementById("customerName").value.trim();
-        const phone = document.getElementById("customerPhone").value.trim();
-        const data = [];
-        let hasInvalid = false;
-
-        if (!customerName) {
-          alert("Customer name is required.");
-          return;
-        }
-
-        tableBody.querySelectorAll("tr").forEach(row => {
-          console.log(row);
-          const brandInput = row.querySelector('[data-type="brand"]');
-          const medicine = brandInput.selectedMedicine;
-          if (!brandInput.value.trim() || !medicine) return;
-
-          const quantity = parseInt(row.querySelector('[data-type="quantity"]').value);
-          const stock = parseInt(row.children[6].textContent);
-
-          if (quantity > stock) {
-            alert(`Not enough stock for ${medicine.brand}. Requested: ${quantity}, Available: ${stock}`);
-            hasInvalid = true;
-            return;
-          }
-          
-
-          data.push({
-            brand: medicine.brand,
-            formula: medicine.formula,
-            price: parseFloat(row.children[2].textContent),
-            discount: row.querySelector('[data-type="discount"]').value.trim(),
-            quantity,
-            unit: row.children[4].textContent.trim().toLowerCase(),
-            total: parseFloat(row.children[8].textContent),
-          });
-        });
-
-        if (hasInvalid || data.length === 0) return;
-
-        const grandTotal = parseFloat(document.getElementById("grandTotal").textContent);
-
-        fetch(`${baseUrl}/api/lend`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            customerName,
-            phone,
-            items: data,
-            totalAmount: grandTotal
-          })
-        })
-          .then(res => res.json())
-          .then(result => {
-            if (result.success && result.lendId) {
-              window.location.href = `/lending`;
-            } else {
-              alert("Failed to save lend order.");
-            }
-          })
-          .catch(err => {
-            console.error("Lend Submit Error:", err);
-            alert("Error submitting lend order.");
-          });
-      }
+      </script>
 
 
 
-
-
-
-
-      document.getElementById("submitOrderBtn").addEventListener("click", submitOrder);
-
-      document.getElementById("resetBtn").addEventListener("click", resetTable);
-
-      createRow();
-    </script>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-      crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
   </body>
 
   </html>

@@ -82,6 +82,7 @@ route.post('/api/sale/update',isAuthenticated, async (req, res) => {
           total: totalSellingPrice,
           purchasePrice: med.purchasePrice,
           profit: profit,
+          unit: med.unit,
           salesperson: {
             id: user._id,
             name: user.username

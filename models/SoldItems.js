@@ -12,14 +12,35 @@ const SoldItemSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  unit: {
+    type: String,
+    enum: [
+      "per strip", 
+      "per tablet", 
+      "per unit", 
+      "per pack",
+      "per bottle", 
+      "per jar", 
+      "per tube", 
+      "per box", 
+      "per piece"
+    ],
+    required: true
+  },
   profit: {
     type: Number,
     required: true
+  },
+  type: {
+    type: String,
+    enum: ['purchased', 'lended'],
+    default: 'purchased'
   },
   salesperson: {
     id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // optional
     name: { type: String }
   },
+
   saleDate: { type: Date, default: Date.now }
 });
 

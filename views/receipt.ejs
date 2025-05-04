@@ -84,7 +84,7 @@
 
   <div class="item-row totals">
     <span>Total</span>
-    <span>Rs.<%= sale.totalPrice.toFixed(2) %></span>
+    <span>Rs.<%= sale.totalPrice ? sale.totalPrice.toFixed(2) : sale.totalAmount.toFixed(2) %></span>
   </div>
 
   <div class="line">******************************</div>
