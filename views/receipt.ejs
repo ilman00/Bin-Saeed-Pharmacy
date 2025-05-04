@@ -10,20 +10,52 @@
     font-size: 12px;
   }
 
-  h2, h4 {
+  h2, h4, h6 {
     text-align: center;
     margin: 5px 0;
   }
 
-  .line {
+  .line, .dash {
     text-align: center;
     margin: 10px 0;
   }
 
-  .item-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
+  .dash::before {
+    content: "------------------------------";
+    display: block;
+  }
+
+  .line::before {
+    content: "******************************";
+    display: block;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table th,
+  table td {
+    text-align: left;
+    padding: 2px 0;
+  }
+
+  table th:nth-child(1),
+  table td:nth-child(1) {
+    width: 55%;
+  }
+
+  table th:nth-child(2),
+  table td:nth-child(2) {
+    width: 15%;
+    text-align: center;
+  }
+
+  table th:nth-child(3),
+  table td:nth-child(3) {
+    width: 30%;
+    text-align: right;
   }
 
   .totals {
@@ -31,15 +63,9 @@
     font-weight: bold;
   }
 
-  .thank-you {
+  .thank-you, .developer-detail {
     text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-  }
-
-  .developer-detail{
-    text-align: center;
-    margin-top: 5px;
+    margin-top: 15px;
   }
 
   @media print {
@@ -54,9 +80,9 @@
   <h6>Address: Your Address Here</h6>
   <h6>Tel: 123456789</h6>
 
-  <div class="line">******************************</div>
+  <div class="line"></div>
   <h3 style="text-align:center;">CASH RECEIPT</h3>
-  <div class="line">******************************</div>
+  <div class="line"></div>
 
   <div>
     <div>Date: <%= new Date(sale.createdAt).toLocaleString() %></div>
@@ -64,33 +90,41 @@
     <div>Salesperson: <%= sale.username %></div>
   </div>
 
-  <div class="line">------------------------------</div>
+  <div class="dash"></div>
 
-  <div class="item-row" style="font-weight:bold;">
-    <span>Description</span>
-    <span>Disc</span>
-    <span>Price</span>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Disc</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sale.items.forEach(item => { %>
+        <tr>
+          <td><%= item.brand %> × <%= item.quantity %></td>
+          <td><%= item.discount %></td>
+          <td>Rs.<%= item.total.toFixed(2) %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
 
-  <% sale.items.forEach(item => { %>
-    <div class="item-row">
-      <span><%= item.brand %> * <%= item.quantity%></span>
-      <span><%= item.discount %></span>
-      <span>Rs.<%= item.total.toFixed(2) %></span>
-    </div>
-  <% }); %>
+  <div class="dash"></div>
 
-  <div class="line">------------------------------</div>
+  <table class="totals">
+    <tr>
+      <td><strong>Total</strong></td>
+      <td></td>
+      <td><strong>Rs.<%= sale.totalPrice ? sale.totalPrice.toFixed(2) : sale.totalAmount.toFixed(2) %></strong></td>
+    </tr>
+  </table>
 
-  <div class="item-row totals">
-    <span>Total</span>
-    <span>Rs.<%= sale.totalPrice ? sale.totalPrice.toFixed(2) : sale.totalAmount.toFixed(2) %></span>
-  </div>
-
-  <div class="line">******************************</div>
+  <div class="line"></div>
 
   <div class="thank-you">THANK YOU!</div>
-  <div class="developer-detail">Application Developed By Ilman <br> Ph: 03499038984 </div>
+  <div class="developer-detail">Application Developed By Ilman<br>Ph: 03499038984</div>
 
   <div class="text-center no-print" style="margin-top: 20px;">
     <button class="btn btn-primary mb-2" onclick="window.print()">🖨️ Print Receipt</button>

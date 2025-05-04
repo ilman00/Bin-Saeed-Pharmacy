@@ -12,7 +12,8 @@ route.get('/today-sales', isAuthenticated ,async (req, res) => {
 
     const sales = await SoldItems.find({
         saleDate: { $gte: startOfDay, $lte: endOfDay }
-    });
+    }).sort({ _id: -1 });
+    
 
     const grandTotal = sales.reduce((sum, sale) => sum + sale.total, 0);
 

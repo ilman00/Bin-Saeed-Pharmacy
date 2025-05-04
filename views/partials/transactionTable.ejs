@@ -1,0 +1,29 @@
+<tbody>
+  <% if (transactions.length === 0) { %>
+    <tr>
+      <td colspan="4" class="text-muted">No transactions found.</td>
+    </tr>
+  <% } else { %>
+    <% transactions.forEach(function(transaction) { %>
+      <tr class="table-light">
+        <td><%= new Date(transaction.createdAt).toLocaleString() %></td>
+        <td>
+          <ul class="list-unstyled mb-0">
+            <% transaction.items.forEach(function(item) { %>
+              <li>
+                <strong><%= item.brand %></strong>
+                (<%= item.quantity %> × Rs.<%= item.price.toFixed(2) %>)
+                <button class="btn btn-sm btn-outline-danger ms-2"
+                  onclick="handleReturn('<%= item._id %>', '<%= transaction._id %>', '<%= item.quantity %>')">
+                  Return
+                </button>
+              </li>
+            <% }) %>
+          </ul>
+        </td>
+        <td class="fw-bold text-success">Rs.<%= transaction.totalPrice.toFixed(2) %></td>
+        <td><%= transaction.salesperson?.name || 'N/A' %></td>
+      </tr>
+    <% }) %>
+  <% } %>
+</tbody>

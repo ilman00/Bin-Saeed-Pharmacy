@@ -1,0 +1,8 @@
+<ul class="pagination justify-content-center">
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+        <a class="page-link pagination-link" href="#" data-page="<%= i %>"><%= i %></a>
+      </li>
+    <% } %>
+  </ul>
+  

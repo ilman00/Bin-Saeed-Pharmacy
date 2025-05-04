@@ -21,7 +21,7 @@ const lending = require('./routes/lendingRoute')
 const history = require('./routes/historyRoute')
 const deleteProduct = require('./routes/deleteProduct')
 const todaySale = require('./routes/todaySaleRoute')
-
+const saleReturn = require('./routes/saleReturn')
 app.use(cors());
 // Set view engine
 app.set('view engine', 'ejs');
@@ -62,7 +62,7 @@ app.use(lending)
 app.use(history)
 app.use(deleteProduct)
 app.use(todaySale)
-
+app.use(saleReturn)
 
 app.get('/', (req, res) => {
   const user = req.user

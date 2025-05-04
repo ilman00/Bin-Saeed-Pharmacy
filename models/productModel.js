@@ -55,7 +55,8 @@ const productShema = new mongoose.Schema({
       "per box", 
       "per piece"
     ],
-    required: true
+    required: true,
+    default: "per piece"
   },
   price: {
     type: Number,
