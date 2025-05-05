@@ -42,14 +42,14 @@
               </div>
 
               <div class="row mb-3">
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                   <label class="form-label">Batch Number</label>
                   <input type="text" name="batchNumber" class="form-control" placeholder="e.g. B1234">
-                </div>
-                <div class="col-md-4">
+                </div> -->
+                <!-- <div class="col-md-4">
                   <label class="form-label">Manufacturer</label>
                   <input type="text" class="form-control" name="manufacturer" placeholder="e.g. XYZ Pharma">
-                </div>
+                </div> -->
                 <div class="col-md-4">
                   <label class="form-label">Expiry Date</label>
                   <input type="date" name="expiryDate" class="form-control">
@@ -59,32 +59,38 @@
               <div class="row mb-3">
                 <div class="col-md-4">
 
-                  <label class="form-label" >Type</label>
+                  <label class="form-label">Type <span class="text-danger">* (very Important)</span></label>
                   <select class="form-select" name="type" required>
                     <option value="medicine" selected>medicine</option>
                     <option value="cosmetic">Cosmetic</option>
                   </select>
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label">Stock Quantity</label>
+                  <label class="form-label">Stock Quantity <span class="text-danger">*</span></label>
                   <input type="number" name="stock" class="form-control" min="0" required>
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label">Select Unite</label>
-                  <select class="form-select" name="unit">
-                    <option selected disabled>Select Unite</option>
-                    <option value="per tablet">Per Tablet</option>
+                  <label class="form-label">Select Unite <span class="text-danger">*</span></label>
+                  <select class="form-select" name="unit" required>
+                    <option selected disabled>Select Unit</option>
                     <option value="per strip">Per Strip</option>
-                    <option value="per pack">Per Pack</option>
+                    <option value="per tablet">Per Tablet</option>
                     <option value="per unit">Per Unit</option>
+                    <option value="per pack">Per Pack</option>
+                    <option value="per bottle">Per Bottle</option>
+                    <option value="per jar">Per Jar</option>
+                    <option value="per tube">Per Tube</option>
+                    <option value="per box">Per Box</option>
+                    <option value="per piece">Per Piece</option>
                   </select>
+                  
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label">Price (per unit)</label>
+                  <label class="form-label">Price (per unit) <span class="text-danger">*</span></label>
                   <input type="number" name="price" class="form-control" step="0.01" required>
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label">Purchase Price</label>
+                  <label class="form-label">Purchase Price <span class="text-danger">*</span></label>
                   <input type="number" name="purchasePrice" class="form-control" step="0.01" required>
                 </div>
                 

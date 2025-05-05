@@ -73,11 +73,29 @@
       display: none;
     }
   }
+
+  
+</style>
+<style media="print">
+  @page {
+  size: 80mm auto; /* Let browser calculate dynamic height */
+  margin: 0;
+}
+
+  body {
+    width: 80mm;
+    margin: 0;
+    font-size: 12px;
+  }
+
+  .no-print {
+    display: none; /* Hide unnecessary UI elements */
+  }
 </style>
 
 <body>
   <h2><strong>Bin Saeed Pharmacy</strong></h2>
-  <h6>Address: Your Address Here</h6>
+  <h6>Address: Qatar Heights  Board Bazar Railway lin</h6>
   <h6>Tel: 123456789</h6>
 
   <div class="line"></div>
@@ -124,10 +142,16 @@
   <div class="line"></div>
 
   <div class="thank-you">THANK YOU!</div>
-  <div class="developer-detail">Application Developed By Ilman<br>Ph: 03499038984</div>
+  <div class="developer-detail">Application Developed By Ilman And Ahmad<br>Ph: 03499038984 <br> Ph: 03299010053</div>
 
   <div class="text-center no-print" style="margin-top: 20px;">
     <button class="btn btn-primary mb-2" onclick="window.print()">🖨️ Print Receipt</button>
     <a href="/sale-page" class="btn btn-secondary">Back to Dashboard</a>
   </div>
+
+  <script>
+    window.onload = () => {
+      setTimeout(() => window.print(), 300); // Wait for page to render
+    };
+  </script>
 </body>

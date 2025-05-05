@@ -22,6 +22,10 @@ const history = require('./routes/historyRoute')
 const deleteProduct = require('./routes/deleteProduct')
 const todaySale = require('./routes/todaySaleRoute')
 const saleReturn = require('./routes/saleReturn')
+const lessStock = require('./routes/lessStock');
+const { less } = require('transformers');
+
+
 app.use(cors());
 // Set view engine
 app.set('view engine', 'ejs');
@@ -63,6 +67,8 @@ app.use(history)
 app.use(deleteProduct)
 app.use(todaySale)
 app.use(saleReturn)
+app.use(lessStock)
+
 
 app.get('/', (req, res) => {
   const user = req.user
