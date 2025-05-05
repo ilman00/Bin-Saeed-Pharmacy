@@ -23,7 +23,6 @@ const deleteProduct = require('./routes/deleteProduct')
 const todaySale = require('./routes/todaySaleRoute')
 const saleReturn = require('./routes/saleReturn')
 const lessStock = require('./routes/lessStock');
-const { less } = require('transformers');
 
 
 app.use(cors());
@@ -42,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const mongodb = process.env.MONGODB_URL
 
 app.use(session({
-  secret: 'yourSecret',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
