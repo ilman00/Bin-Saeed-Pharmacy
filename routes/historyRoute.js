@@ -4,7 +4,6 @@ const route = express.Router();
 
 const SaleTransaction = require('../models/SaleTransaction'); // adjust path
 
-const ITEMS_PER_PAGE = 10;
 
 
 // routes/history.js (or wherever you defined it)
@@ -17,7 +16,7 @@ route.get('/history', isAuthenticated, async (req, res) => {
     const totalPages = Math.ceil(totalCount / limit);
     const transactions = await SaleTransaction.find()
       .populate('items')
-      .sort({ createdAt: -1 })
+      .sort({ updatedAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
 
@@ -41,7 +40,7 @@ route.get('/history/data', async (req, res) => {
 
   const totalTransactions = await SaleTransaction.countDocuments();
   const transactions = await SaleTransaction.find()
-    .sort({ createdAt: -1 })
+    .sort({ updatedAt: -1 })
     .skip(skip)
     .limit(limit)
     .populate('items')
