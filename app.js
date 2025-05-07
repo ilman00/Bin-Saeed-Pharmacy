@@ -37,8 +37,8 @@ app.use(express.json());
 // Static files (CSS, JS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
 
-const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
-// const mongodb = process.env.MONGODB_URL
+// const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
+const mongodb = process.env.MONGODB_URL
 
 app.use(session({
   secret: process.env.SECRET,
