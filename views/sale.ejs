@@ -153,8 +153,6 @@
 
       <script>
 
-        const baseUrl = 'https://bin-saeed-pharmacy.onrender.com'
-        // const baseUrl = 'http://localhost:5000'
 
 
         const tableBody = document.getElementById("tableBody");
@@ -215,7 +213,7 @@
 
           const productType = document.getElementById('productType').value; // 👈 get selected type
 
-          fetch(`${baseUrl}/api/sale?query=${encodeURIComponent(value)}&type=${productType}`) // 👈 pass type
+          fetch(`/api/sale?query=${encodeURIComponent(value)}&type=${productType}`) // 👈 pass type
             .then(res => res.json())
             .then(matches => {
               let suggestionBox = input.nextElementSibling;
@@ -369,7 +367,7 @@
 
         function sendToBackend(data, callback) {
           console.log(data);
-          fetch(`${baseUrl}/api/sale/update`, {
+          fetch(`/api/sale/update`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ items: data })
@@ -463,7 +461,7 @@
 
           const grandTotal = parseFloat(document.getElementById("grandTotal").textContent);
 
-          fetch(`${baseUrl}/api/lend`, {
+          fetch(`/api/lend`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
