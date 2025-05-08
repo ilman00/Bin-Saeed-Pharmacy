@@ -1,5 +1,7 @@
 <%- include('partials/header') %>
+<!-- Bootstrap Icons CDN -->
 </head>
+
 <body class="bg-light">
   <div class="container mt-5 col-lg-4 bg-tertiary">
     <h2>Login</h2>
@@ -11,12 +13,32 @@
         <label>Username</label>
         <input type="text" name="username" class="form-control" required>
       </div>
+
       <div class="mb-3">
         <label>Password</label>
-        <input type="password" name="password" class="form-control" required>
+        <div class="input-group">
+          <input type="password" name="password" class="form-control" id="passwordInput" required>
+          <button type="button" class="btn" id="togglePassword">
+            <i class="bi bi-eye" id="toggleIcon" style="color: black;"></i>
+          </button>
+        </div>
       </div>
+
       <button class="btn btn-primary">Login</button>
     </form>
   </div>
+
+  <script>
+    const passwordInput = document.getElementById('passwordInput');
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleIcon = document.getElementById('toggleIcon');
+
+    togglePassword.addEventListener('click', () => {
+      const isPasswordVisible = passwordInput.type === 'text';
+      passwordInput.type = isPasswordVisible ? 'password' : 'text';
+      toggleIcon.classList.toggle('bi-eye');
+      toggleIcon.classList.toggle('bi-eye-slash');
+    });
+  </script>
 </body>
 </html>

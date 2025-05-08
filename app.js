@@ -23,6 +23,7 @@ const deleteProduct = require('./routes/deleteProduct')
 const todaySale = require('./routes/todaySaleRoute')
 const saleReturn = require('./routes/saleReturn')
 const lessStock = require('./routes/lessStock');
+const changePassword = require('./routes/changePassword')
 
 
 app.use(cors());
@@ -37,8 +38,8 @@ app.use(express.json());
 // Static files (CSS, JS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
-const mongodb = process.env.MONGODB_URL
+const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
+// const mongodb = process.env.MONGODB_URL
 
 app.use(session({
   secret: process.env.SECRET,
@@ -67,7 +68,7 @@ app.use(deleteProduct)
 app.use(todaySale)
 app.use(saleReturn)
 app.use(lessStock)
-
+app.use(changePassword)
 
 app.get('/', (req, res) => {
   const user = req.user

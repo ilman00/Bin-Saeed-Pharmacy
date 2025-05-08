@@ -9,28 +9,31 @@ route.get('/loss', isAuthenticated ,async (req, res) => {
       $expr: {
         $gt: [
           { $multiply: ["$purchasePrice", "$quantity"] },
-          "$total" // here, directly the field total
+          "$total"
         ]
       }
-    });
-    
-    console.log(lossItems);
+    }).sort({ saleDate: -1 });
+
     let totalLoss = 0;
     const formattedLossItems = lossItems.map(item => {
-      const lossPerItem = item.purchasePrice - item.price;
-      const totalItemLoss = lossPerItem * item.quantity;
+      const totalCost = item.purchasePrice * item.quantity;
+      const totalItemLoss = totalCost - item.total;
+
       totalLoss += totalItemLoss;
+
       return {
         brand: item.brand,
         formula: item.formula,
         purchasePrice: item.purchasePrice,
         price: item.price,
+        discount: item.discount,
         quantity: item.quantity,
+        total: item.total,
         saleDate: item.saleDate,
         loss: totalItemLoss
       };
     });
-    console.log(formattedLossItems[0], totalLoss);
+
     res.render('loss', { lossItems: formattedLossItems, totalLoss });
 
   } catch (error) {
@@ -38,5 +41,6 @@ route.get('/loss', isAuthenticated ,async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
 
 module.exports = route; 
