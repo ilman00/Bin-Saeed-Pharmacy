@@ -11,7 +11,7 @@ route.get('/add-product', isAuthenticated,(req, res) => {
 
 
 // POST route to add new medicine
-route.post('/add-product', isAuthenticated,async (req, res) => {
+route.post('/add-product', isAuthenticated, async (req, res) => {
     try {
         const {
             brand,
@@ -27,6 +27,13 @@ route.post('/add-product', isAuthenticated,async (req, res) => {
             type,
             discription
         } = req.body;
+
+        // Check if a product with the same brand already exists
+        const existingProduct = await ProductModel.findOne({ brand: brand.trim() });
+        if (existingProduct) {
+            // Redirect with a duplicate flag
+            return res.redirect('/add-product?duplicate=true');
+        }
 
         const newMedicine = new ProductModel({
             brand,
@@ -44,12 +51,13 @@ route.post('/add-product', isAuthenticated,async (req, res) => {
         });
 
         await newMedicine.save();
+        res.redirect('/add-product?success=true');
 
-        res.redirect('/add-product?success=true'); // redirect to home or inventory list
     } catch (err) {
         console.error('Error adding medicine:', err);
         res.redirect('/add-product?success=false');
     }
 });
+
 
 module.exports = route
