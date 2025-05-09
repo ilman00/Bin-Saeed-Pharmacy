@@ -27,10 +27,6 @@ const productShema = new mongoose.Schema({
     ],
     default: null
   },
-  batchNumber: {
-    type: String,
-    // required: true
-  },
   manufacturer: {
     type: String,
   },

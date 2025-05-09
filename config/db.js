@@ -5,7 +5,6 @@ const connectDB =  () => {
 
 
   try {
-    // const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
     const mongodb = process.env.MONGODB_URL
     mongoose.connect(mongodb);
     console.log('MongoDB connected successfully');

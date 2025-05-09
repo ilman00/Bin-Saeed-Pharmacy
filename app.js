@@ -24,8 +24,9 @@ const todaySale = require('./routes/todaySaleRoute')
 const saleReturn = require('./routes/saleReturn')
 const lessStock = require('./routes/lessStock');
 const changePassword = require('./routes/changePassword')
-
-
+const downloadFile = require('./routes/download')
+// TODO: I want to add a page where user can select a number items with quantity less than the number will be shown
+// TODO: Important. Add return to every item in lending page.
 app.use(cors());
 // Set view engine
 app.set('view engine', 'ejs');
@@ -38,7 +39,6 @@ app.use(express.json());
 // Static files (CSS, JS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// const mongodb = 'mongodb://127.0.0.1:27017/pharmacy'
 const mongodb = process.env.MONGODB_URL
 
 app.use(session({
@@ -69,6 +69,8 @@ app.use(todaySale)
 app.use(saleReturn)
 app.use(lessStock)
 app.use(changePassword)
+app.use(downloadFile)
+
 
 app.get('/', (req, res) => {
   const user = req.user
