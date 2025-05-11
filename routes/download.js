@@ -6,14 +6,17 @@ const router = express.Router();
 const isAuthenticated = require('../middlewares/auth')
 
 // Render download page
-router.get('/download', isAuthenticated ,(req, res) => {
+router.get('/download', isAuthenticated, (req, res) => {
   res.render('downloads'); // download.ejs file in views folder
 });
 
 // Download Products CSV
-router.get('/download/products', isAuthenticated ,async (req, res) => {
+router.get('/download/products', isAuthenticated, async (req, res) => {
   try {
     const products = await Product.find().lean();
+    console.log('PRODUCT COUNT:', products.length);
+    console.log('FIRST PRODUCT:', products[0]);
+
 
     const fields = [
       'brand',
@@ -30,6 +33,7 @@ router.get('/download/products', isAuthenticated ,async (req, res) => {
       { label: 'Created At', value: row => row.createdAt?.toISOString() },
     ];
 
+
     const parser = new Parser({ fields });
     const csv = parser.parse(products);
 
@@ -37,13 +41,13 @@ router.get('/download/products', isAuthenticated ,async (req, res) => {
     res.attachment('products.csv');
     res.send(csv);
   } catch (err) {
-    console.error(err);
+    console.error('Error in /download/products:', err);
     res.status(500).send('Failed to generate products CSV');
   }
 });
 
 // Download Sales CSV (SoldItems)
-router.get('/download/sales', isAuthenticated ,async (req, res) => {
+router.get('/download/sales', isAuthenticated, async (req, res) => {
   try {
     const { range } = req.query;
     let filter = {};
