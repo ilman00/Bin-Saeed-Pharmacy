@@ -14,25 +14,33 @@ router.get('/download', isAuthenticated, (req, res) => {
 router.get('/download/products', isAuthenticated, async (req, res) => {
   try {
     const products = await Product.find().lean();
-    console.log('PRODUCT COUNT:', products.length);
-    console.log('FIRST PRODUCT:', products[0]);
-
 
     const fields = [
       'brand',
       'formula',
       'category',
       'manufacturer',
-      { label: 'Expiry Date', value: row => row.expiryDate ? row.expiryDate.toISOString().split('T')[0] : '' },
+      {
+        label: 'Expiry Date',
+        value: row => {
+          const date = new Date(row.expiryDate);
+          return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0];
+        }
+      },
       'stock',
       'unit',
       'price',
       'purchasePrice',
       'type',
       'description',
-      { label: 'Created At', value: row => row.createdAt?.toISOString() },
+      {
+        label: 'Created At',
+        value: row => {
+          const date = new Date(row.createdAt);
+          return isNaN(date.getTime()) ? '' : date.toISOString();
+        }
+      }
     ];
-
 
     const parser = new Parser({ fields });
     const csv = parser.parse(products);
