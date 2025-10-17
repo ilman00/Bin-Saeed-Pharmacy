@@ -104,7 +104,7 @@
 
   <div>
     <div>Date: <%= new Date(sale.createdAt).toLocaleString() %></div>
-    <div>Sale ID: <%= sale._id %></div>
+    <div>Sale ID: <strong> <%= sale.transactionNumber %></strong></div>
     <div>Salesperson: <%= sale.salesperson.name %></div>
   </div>
 

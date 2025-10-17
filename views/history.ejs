@@ -1,261 +1,31 @@
 <%- include('partials/header') %>
 
-  <body class="bg-light min-vh-100 d-flex flex-column">
-    <%- include('partials/navbar') %>
+<body class="bg-light min-vh-100 d-flex flex-column">
+  <%- include('partials/navbar') %>
 
-      <div class="container mt-5 flex-grow-1">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="text-primary">🧾 Transaction History</h2>
-        </div>
+  <div class="container mt-5 flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="text-primary">🧾 Transaction History</h2>
+    </div>
 
-        <!-- Date Search Section -->
-        <div class="row mb-4">
-          <div class="col-md-6">
-            <div class="input-group">
-              <input type="date" id="searchDate" class="form-control" placeholder="Select date" />
-              <button class="btn btn-primary" type="button" onclick="searchByDate()">
-                <i class="bi bi-search"></i> Search
-              </button>
-              <button class="btn btn-outline-secondary" type="button" onclick="clearSearch()">
-                Clear
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div id="history-container">
-          <div class="card shadow-sm">
-            <div class="card-body p-4">
-              <div class="table-responsive">
-                <table class="table table-hover align-middle text-center">
-                  <thead class="table-primary">
-                    <tr>
-                      <th scope="col">Date</th>
-                      <th scope="col">Items</th>
-                      <th scope="col">Grand Total</th>
-                      <th scope="col">Salesperson</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% if (transactions.length===0) { %>
-                      <tr>
-                        <td colspan="4" class="text-muted">No transactions found.</td>
-                      </tr>
-                      <% } %>
-                        <% transactions.forEach(function(transaction) { %>
-                          <tr class="table-light">
-                            <td>
-                              <%= new Date(transaction.createdAt).toLocaleString() %>
-                            </td>
-
-                            <td>
-                              <ul class="list-unstyled mb-0">
-                                <% transaction.items.forEach(function(item) { %>
-                                  <li>
-                                    <strong>
-                                      <%= item.brand %>
-                                    </strong>
-                                    (<%= item.quantity %> × Rs.<%= item.price.toFixed(2) %>)
-
-                                        <button class="btn btn-sm btn-outline-danger ms-2"
-                                          onclick="handleReturn('<%= item._id %>', '<%= transaction._id %>', '<%= item.quantity %>' )">
-                                          Return
-                                        </button>
-                                  </li>
-
-                                  <% }) %>
-                              </ul>
-                            </td>
-
-                            <td class="fw-bold text-success">Rs.<%= transaction.totalPrice.toFixed(2) %>
-                            </td>
-
-                            <td>
-                              <%= transaction.salesperson?.name || 'N/A' %>
-                            </td>
-                          </tr>
-                          <% }) %>
-                  </tbody>
-                </table>
-              </div>
-              <nav aria-label="Page navigation" class="mt-4">
-                <ul class="pagination justify-content-center">
-
-                  <% if (currentPage> 1) { %>
-                    <li class="page-item">
-                      <a class="page-link" href="?page=<%= currentPage - 1 %>">&laquo; Prev</a>
-                    </li>
-                    <% } else { %>
-                      <li class="page-item disabled">
-                        <span class="page-link">&laquo; Prev</span>
-                      </li>
-                      <% } %>
-
-                        <% for (let i=1; i <=totalPages; i++) { %>
-                          <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-                            <a class="page-link" href="?page=<%= i %>">
-                              <%= i %>
-                            </a>
-                          </li>
-                          <% } %>
-
-                            <% if (currentPage < totalPages) { %>
-                              <li class="page-item">
-                                <a class="page-link" href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
-                              </li>
-                              <% } else { %>
-                                <li class="page-item disabled">
-                                  <span class="page-link">Next &raquo;</span>
-                                </li>
-                                <% } %>
-
-                </ul>
-              </nav>
-
-            </div>
-          </div>
+    <!-- Search -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" id="searchTransaction" class="form-control"
+            placeholder="Enter Transaction Number (e.g. TRX-000123)" />
+          <button class="btn btn-primary" type="button" onclick="searchByTransaction()">
+            <i class="bi bi-search"></i> Search
+          </button>
+          <button class="btn btn-outline-secondary" type="button" onclick="clearSearch()">Clear</button>
         </div>
       </div>
+    </div>
 
-      <div id="successMessage" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-  background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 9999;">
-        Lending returned and stock restored!
-      </div>
-      <footer class="mt-auto py-3 bg-white text-center border-top">
-        <small class="text-muted">© <%= new Date().getFullYear() %> Your Medical Store</small>
-      </footer>
-
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-      <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('returnSuccess') === 'true') {
-          const messageBox = document.getElementById('successMessage');
-          messageBox.style.display = 'block';
-          setTimeout(() => {
-            messageBox.style.display = 'none';
-            urlParams.delete('returnSuccess');
-            const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-            history.replaceState(null, '', newUrl);
-          }, 3000);
-        }
-      </script>
-
-      <script>
-        function handleReturn(soldItemId, transactionId, maxQty) {
-          let input = prompt(`Enter quantity to return (max ${maxQty}):`);
-
-          if (input === null) return;
-
-          let qtyToReturn = parseInt(input.trim());
-          if (isNaN(qtyToReturn) || qtyToReturn < 1) {
-            alert("Invalid quantity.");
-            return;
-          }
-
-          if (qtyToReturn > maxQty) {
-            alert(`You can't return more than ${maxQty}.`);
-            return;
-          }
-
-          fetch('/sale/return', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              soldItemId,
-              transactionId,
-              returnQuantity: qtyToReturn
-            })
-          })
-            .then(res => res.json())
-            .then(data => {
-              if (data.success) {
-                window.location.href = "/history?return=success";
-              } else {
-                alert(data.message || "Failed to process return.");
-              }
-            })
-            .catch(err => {
-              console.error("Return error:", err);
-              alert("Something went wrong.");
-            });
-        }
-      </script>
-
-      <script>
-        let currentSearchDate = null;
-
-        function loadHistoryPage(page = 1) {
-          let url = `/history/data?page=${page}`;
-          
-          if (currentSearchDate) {
-            url += `&date=${currentSearchDate}`;
-          }
-
-          fetch(url)
-            .then(res => res.json())
-            .then(data => {
-              const container = document.getElementById('history-container');
-              container.innerHTML = `
-                <div class="card shadow-sm">
-                  <div class="card-body p-4">
-                    <div class="table-responsive">
-                      ${renderTransactions(data.transactions)}
-                    </div>
-                    ${renderPagination(data.currentPage, data.totalPages)}
-                  </div>
-                </div>
-              `;
-            })
-            .catch(err => {
-              console.error("Failed to load data:", err);
-              alert("Something went wrong while loading transactions.");
-            });
-        }
-
-        function searchByDate() {
-          const searchDate = document.getElementById('searchDate').value;
-
-          if (!searchDate) {
-            alert("Please select a date.");
-            return;
-          }
-
-          currentSearchDate = searchDate;
-          loadHistoryPage(1);
-        }
-
-        function clearSearch() {
-          document.getElementById('searchDate').value = '';
-          currentSearchDate = null;
-          loadHistoryPage(1);
-        }
-
-        function renderTransactions(transactions) {
-          if (transactions.length === 0) {
-            return `
-              <table class="table">
-                <thead class="table-primary">
-                  <tr>
-                    <th>Date</th>
-                    <th>Items</th>
-                    <th>Grand Total</th>
-                    <th>Salesperson</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td colspan="4" class="text-center text-muted py-3">No transactions found.</td>
-                  </tr>
-                </tbody>
-              </table>
-            `;
-          }
-
-          let html = `
+    <div id="history-container">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="table-responsive">
             <table class="table table-hover align-middle text-center">
               <thead class="table-primary">
                 <tr>
@@ -265,63 +35,266 @@
                   <th>Salesperson</th>
                 </tr>
               </thead>
-              <tbody>`;
+              <tbody id="transactionTableBody">
+                <tr>
+                  <td colspan="4" class="text-center">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-          transactions.forEach(transaction => {
-            const date = new Date(transaction.createdAt).toLocaleString();
-            const itemsList = transaction.items.map(item => `
-              <li>
-                <strong>${item.brand}</strong>
-                (${item.quantity} × Rs.${item.price.toFixed(2)})
-                <button class="btn btn-sm btn-outline-danger ms-2"
-                  onclick="handleReturn('${item._id}', '${transaction._id}', '${item.quantity}')">Return</button>
-              </li>
-            `).join('');
+          <!-- Pagination -->
+          <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center" id="pagination">
+              <!-- Populated by JavaScript -->
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            html += `
-              <tr class="table-light">
-                <td>${date}</td>
-                <td><ul class="list-unstyled mb-0">${itemsList}</ul></td>
-                <td class="fw-bold text-success">Rs.${transaction.totalPrice.toFixed(2)}</td>
-                <td>${transaction.salesperson?.name || 'N/A'}</td>
-              </tr>`;
-          });
+  <div id="successMessage"
+    style="display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);
+    background-color:#4CAF50;color:white;padding:10px 20px;border-radius:5px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);z-index:9999;">
+    Return processed successfully!
+  </div>
 
-          html += `</tbody></table>`;
-          return html;
-        }
+  <footer class="mt-auto py-3 bg-white text-center border-top">
+    <small class="text-muted">© <%= new Date().getFullYear() %> Your Medical Store</small>
+  </footer>
 
-        function renderPagination(current, total) {
-          if (total <= 1) return '';
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-          let pagination = `
-            <nav class="mt-4" aria-label="Page navigation">
-              <ul class="pagination justify-content-center">`;
+  <!-- Return handler -->
+  <script>
+    function handleReturn(soldItemId, transactionId, maxQty) {
+      let input = prompt(`Enter quantity to return (max ${maxQty}):`);
+      if (input === null) return;
 
-          const createPageItem = (page, label, disabled = false, active = false) => {
-            if (disabled) {
-              return `<li class="page-item disabled"><span class="page-link">${label}</span></li>`;
-            } else if (active) {
-              return `<li class="page-item active"><span class="page-link">${page}</span></li>`;
-            } else {
-              return `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); loadHistoryPage(${page})">${label}</a></li>`;
-            }
-          };
+      let qty = parseInt(input.trim());
+      if (isNaN(qty) || qty < 1) {
+        alert("Invalid quantity.");
+        return;
+      }
+      if (qty > maxQty) {
+        alert(`You can't return more than ${maxQty}.`);
+        return;
+      }
 
-          pagination += createPageItem(current - 1, '&laquo; Prev', current === 1);
-
-          for (let i = 1; i <= total; i++) {
-            pagination += createPageItem(i, i, false, i === current);
+      fetch('/sale/return', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ soldItemId, transactionId, returnQuantity: qty })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            showSuccessMessage();
+            setTimeout(() => {
+              fetchTransactions(currentPage, searchInput.value);
+            }, 1500);
+          } else {
+            alert(data.message || "Failed to process return.");
           }
+        })
+        .catch(() => alert("Something went wrong."));
+    }
 
-          pagination += createPageItem(current + 1, 'Next &raquo;', current === total);
-          pagination += `</ul></nav>`;
-          return pagination;
+    function showSuccessMessage() {
+      const msg = document.getElementById('successMessage');
+      msg.style.display = 'block';
+      setTimeout(() => {
+        msg.style.display = 'none';
+      }, 3000);
+    }
+  </script>
+
+  <!-- Dynamic loading + search -->
+  <script>
+    const tableBody = document.getElementById("transactionTableBody");
+    const paginationDiv = document.getElementById("pagination");
+    const searchInput = document.getElementById("searchTransaction");
+
+    let currentPage = 1;
+    let totalPages = 1;
+    let searchTimeout;
+
+    async function fetchTransactions(page = 1, search = "") {
+      try {
+        tableBody.innerHTML = '<tr><td colspan="4" class="text-center">Loading...</td></tr>';
+        
+        const url = search.trim() 
+          ? `/history/data?page=${page}&transaction=${encodeURIComponent(search.trim())}` 
+          : `/history/data?page=${page}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        renderTransactions(data.transactions);
+        renderPagination(data.currentPage, data.totalPages);
+        
+        currentPage = data.currentPage;
+        totalPages = data.totalPages;
+      } catch (err) {
+        console.error("Error loading transactions:", err);
+        tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Error loading transactions</td></tr>';
+      }
+    }
+
+    function renderTransactions(transactions) {
+      tableBody.innerHTML = "";
+
+      if (!transactions || transactions.length === 0) {
+        tableBody.innerHTML = `
+          <tr><td colspan="4" class="text-center text-muted">No transactions found</td></tr>
+        `;
+        return;
+      }
+
+      transactions.forEach(transaction => {
+        const itemsHtml = transaction.items && transaction.items.length > 0
+          ? transaction.items.map(item => `
+              <li>
+                <strong>${item.brand || 'Unknown'}</strong>
+                (${item.quantity} × Rs.${(item.price || 0).toFixed(2)})
+                <button class="btn btn-sm btn-outline-danger ms-2"
+                  onclick="handleReturn('${item._id}', '${transaction._id}', ${item.quantity})">
+                  Return
+                </button>
+              </li>
+            `).join('')
+          : '<li class="text-muted">No items</li>';
+
+        const row = `
+          <tr class="table-light">
+            <td>${new Date(transaction.createdAt).toLocaleString()}</td>
+            <td>
+              <ul class="list-unstyled mb-0 text-start">
+                ${itemsHtml}
+              </ul>
+            </td>
+            <td class="fw-bold text-success">Rs.${(transaction.totalPrice || 0).toFixed(2)}</td>
+            <td>${transaction.salesperson?.name || 'N/A'}</td>
+          </tr>
+        `;
+        tableBody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    function renderPagination(current, total) {
+      paginationDiv.innerHTML = "";
+      
+      if (total <= 1) {
+        // Even if only 1 page, show it
+        if (total === 1) {
+          paginationDiv.innerHTML = `
+            <li class="page-item disabled">
+              <span class="page-link">&laquo; Prev</span>
+            </li>
+            <li class="page-item active">
+              <span class="page-link">1</span>
+            </li>
+            <li class="page-item disabled">
+              <span class="page-link">Next &raquo;</span>
+            </li>
+          `;
         }
+        return;
+      }
 
-        document.addEventListener('DOMContentLoaded', () => loadHistoryPage(1));
-      </script>
+      // Calculate which 3 pages to show
+      let start, middle, end;
+      
+      if (total <= 3) {
+        // If 3 or fewer pages total, show all
+        start = 1;
+        end = total;
+      } else {
+        // Show current page and one on each side
+        if (current === 1) {
+          start = 1;
+          end = 3;
+        } else if (current === total) {
+          start = total - 2;
+          end = total;
+        } else {
+          start = current - 1;
+          end = current + 1;
+        }
+      }
 
-  </body>
+      // Previous button
+      if (current > 1) {
+        paginationDiv.innerHTML += `
+          <li class="page-item">
+            <a class="page-link" href="#" onclick="event.preventDefault(); fetchTransactions(${current - 1}, searchInput.value)">&laquo; Prev</a>
+          </li>
+        `;
+      } else {
+        paginationDiv.innerHTML += `
+          <li class="page-item disabled">
+            <span class="page-link">&laquo; Prev</span>
+          </li>
+        `;
+      }
 
-  </html>
+      // Page numbers (always show exactly 3)
+      for (let i = start; i <= end; i++) {
+        paginationDiv.innerHTML += `
+          <li class="page-item ${i === current ? 'active' : ''}">
+            <a class="page-link" href="#" onclick="event.preventDefault(); fetchTransactions(${i}, searchInput.value)">${i}</a>
+          </li>
+        `;
+      }
+
+      // Next button
+      if (current < total) {
+        paginationDiv.innerHTML += `
+          <li class="page-item">
+            <a class="page-link" href="#" onclick="event.preventDefault(); fetchTransactions(${current + 1}, searchInput.value)">Next &raquo;</a>
+          </li>
+        `;
+      } else {
+        paginationDiv.innerHTML += `
+          <li class="page-item disabled">
+            <span class="page-link">Next &raquo;</span>
+          </li>
+        `;
+      }
+    }
+
+    function searchByTransaction() {
+      const value = searchInput.value.trim();
+      fetchTransactions(1, value);
+    }
+
+    function clearSearch() {
+      searchInput.value = '';
+      fetchTransactions(1, '');
+    }
+
+    // Optional: Search on Enter key
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === 'Enter') {
+        searchByTransaction();
+      }
+    });
+
+    // Load first page on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchTransactions(1, ''); // Load all transactions initially
+      
+      // Check for success message from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('returnSuccess') === 'true') {
+        showSuccessMessage();
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
