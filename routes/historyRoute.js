@@ -1,58 +1,101 @@
-const express = require('express'); 
-const isAuthenticated = require('../middlewares/auth')
-const route = express.Router();
+const express = require('express');
+const router = express.Router();
+const SaleTransaction = require('../models/SaleTransaction'); // Adjust path to your model
 
-const SaleTransaction = require('../models/SaleTransaction'); // adjust path
-
-
-
-// routes/history.js (or wherever you defined it)
-route.get('/history', isAuthenticated, async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = 10;
-
+// --------------------
+// JSON API for dynamic loading
+// --------------------
+router.get('/history/data', async (req, res) => {
   try {
-    const totalCount = await SaleTransaction.countDocuments();
-    const totalPages = Math.ceil(totalCount / limit);
-    const transactions = await SaleTransaction.find()
-      .populate('items')
-      .sort({ updatedAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const skip = (page - 1) * limit;
 
-    // If it's an AJAX request, return JSON
-    if (req.xhr) {
-      return res.json({ transactions, currentPage: page, totalPages });
+    const query = {};
+
+    // ----- Date filter -----
+    if (req.query.date) {
+      // Use UTC-safe date parsing
+      const searchDate = req.query.date; // e.g., "2025-10-12"
+      const startOfDay = new Date(`${searchDate}T00:00:00.000Z`);
+      const endOfDay = new Date(`${searchDate}T23:59:59.999Z`);
+
+      query.createdAt = {
+        $gte: startOfDay,
+        $lte: endOfDay
+      };
     }
 
-    // Otherwise, render the full page (first load)
-    res.render('history', { transactions, totalPages, currentPage: page });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error loading transactions');
+    // ----- Get total count -----
+    const totalTransactions = await SaleTransaction.countDocuments(query);
+    const totalPages = Math.ceil(totalTransactions / limit);
+
+    // ----- Fetch paginated transactions -----
+    const transactions = await SaleTransaction.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate('salesperson.id', 'name')
+      .populate('items')
+      .lean();
+
+    // Flatten salesperson name for easy rendering
+    transactions.forEach(tx => {
+      tx.salespersonName = tx.salesperson?.id?.name || 'N/A';
+    });
+
+    res.json({
+      success: true,
+      transactions,
+      currentPage: page,
+      totalPages,
+      totalTransactions
+    });
+
+  } catch (error) {
+    console.error('Error fetching history:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch transaction history',
+      error: error.message
+    });
   }
 });
 
-route.get('/history/data', async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = 10;
-  const skip = (page - 1) * limit;
+// --------------------
+// Initial page render for EJS
+// --------------------
+router.get('/history', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const skip = (page - 1) * limit;
 
-  const totalTransactions = await SaleTransaction.countDocuments();
-  const transactions = await SaleTransaction.find()
-    .sort({ updatedAt: -1 })
-    .skip(skip)
-    .limit(limit)
-    .populate('items')
-    .populate('salesperson');
+    const totalTransactions = await SaleTransaction.countDocuments();
+    const totalPages = Math.ceil(totalTransactions / limit);
 
-  res.json({
-    transactions,
-    currentPage: page,
-    totalPages: Math.ceil(totalTransactions / limit)
-  });
+    const transactions = await SaleTransaction.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate('salesperson.id', 'name')
+      .populate('items')
+      .lean();
+
+    transactions.forEach(tx => {
+      tx.salespersonName = tx.salesperson?.id?.name || 'N/A';
+    });
+
+    res.render('history', {
+      transactions,
+      currentPage: page,
+      totalPages
+    });
+
+  } catch (error) {
+    console.error('Error loading history page:', error);
+    res.status(500).send('Error loading history');
+  }
 });
 
-
-
-module.exports = route;
+module.exports = router;

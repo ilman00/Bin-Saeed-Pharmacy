@@ -4,11 +4,11 @@ const passport = require('passport');
 const User = require('../models/User');
 const isAuthenticated = require('../middlewares/auth')
 // Registration Route (Only Admin should use this)
-router.get('/register', isAuthenticated ,(req, res) => {
+router.get('/register',isAuthenticated, (req, res) => {
   res.render('register');
 });
 
-router.post('/register', isAuthenticated ,async (req, res) => {
+router.post('/register', isAuthenticated, async (req, res) => {
   const { username, password, role } = req.body;
   try {
     const user = new User({ username, role });
